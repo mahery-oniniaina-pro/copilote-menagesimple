@@ -5,7 +5,7 @@ import { rulesProvider } from "./providers/rules";
 
 export const MAIN_PROVIDER = "ollama-mistral";
 
-export const SAMPLE_IDS = ["C1", "C3", "E3", "C6", "A5", "B4", "D1", "A1", "B2", "E5", "A8", "H5", "H15", "E4", "E6"];
+export const SAMPLE_IDS = ["C1", "C3", "H5", "C6", "D1", "H15", "A5", "B4", "A1", "H1", "A8", "H13", "E5", "E4", "E6"];
 
 export type Sample = { id: string; group: string; message: string; result: CopilotResult };
 
