@@ -155,9 +155,9 @@ export function Workspace({ samples }: { samples: Sample[] }) {
   return (
     <div className="flex min-h-0 flex-1 flex-col md:h-dvh">
       <header className="flex flex-wrap items-center gap-x-6 gap-y-2.5 border-b border-ink-150 bg-ground px-4 py-3 md:px-6">
-        <div className={`min-w-0 ${mobileOpen ? "hidden md:block" : ""}`}>
+        <div className={`min-w-0 flex-1 md:flex-none ${mobileOpen ? "hidden md:block" : ""}`}>
           <h1 className="text-[17px] font-semibold tracking-[-0.01em]">Registre des plis</h1>
-          <p className="text-[12px] text-ink-500">Service client MénageSimple · prototype non affilié, messages inventés</p>
+          <p className="truncate text-[12px] text-ink-500">Service client MénageSimple · prototype non affilié, messages inventés</p>
         </div>
         <div
           role="toolbar"

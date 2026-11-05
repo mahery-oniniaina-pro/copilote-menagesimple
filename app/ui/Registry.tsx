@@ -30,7 +30,7 @@ export function Registry({
 
   return (
     <>
-      <ol className="ruled divide-y divide-ink-150/70 px-2 py-2">
+      <ol className="divide-y divide-ink-150/70 px-2 py-2">
         {entries.map((entry) => {
           const selected = entry.id === selectedId;
           const status = entry.decision ? DECISION_UI[entry.decision] : { short: STATUS_UI[entry.result.status].short, tone: STATUS_UI[entry.result.status].tone };

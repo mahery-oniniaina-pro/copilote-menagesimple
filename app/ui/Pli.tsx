@@ -32,7 +32,7 @@ function barcode(code: string) {
   return { bars, width: x };
 }
 
-function TrackingLabel({ code, time }: { code: string; time: string }) {
+function TrackingLabel({ code }: { code: string }) {
   const { bars, width } = useMemo(() => barcode(code), [code]);
   return (
     <div className="inline-flex items-stretch overflow-hidden rounded-[3px] border-[1.5px] border-ink-900 bg-sheet">
@@ -44,7 +44,7 @@ function TrackingLabel({ code, time }: { code: string; time: string }) {
           ))}
         </svg>
         <span className="tabular mt-0.5 font-code text-[10.5px] leading-none tracking-[0.06em]">
-          {code.replace("RR·", "")} · {time}
+          {code.replace("RR·", "")}
         </span>
       </span>
     </div>
@@ -69,7 +69,7 @@ function Tracking({ entry }: { entry: Entry }) {
     { label: "Lu sans IA", detail: LANGUAGES[result.language] ?? result.language, grow: 1, state: "done" as const },
     {
       label: "Rédigé",
-      detail: result.durationMs ? `${providerShort(result)}, ${seconds(result.durationMs)}` : providerShort(result),
+      detail: result.durationMs ? `${providerShort(result).split(",")[0]}, ${seconds(result.durationMs)}` : providerShort(result),
       grow: 1 + Math.min(result.durationMs / 2500, 5),
       state: "done" as const,
     },
@@ -92,7 +92,7 @@ function Tracking({ entry }: { entry: Entry }) {
             {index < steps.length - 1 && <span aria-hidden className="h-[1.5px] flex-1 bg-ink-900" />}
           </div>
           <span className={`mt-1.5 text-[12.5px] font-medium whitespace-nowrap ${index === steps.length - 1 ? "" : "pr-2"}`}>{step.label}</span>
-          <span className={`text-[11.5px] text-ink-500 ${index === steps.length - 1 ? "whitespace-nowrap" : "truncate pr-2"}`}>{step.detail}</span>
+          <span className={`text-[11.5px] leading-snug text-ink-500 ${index === steps.length - 1 ? "whitespace-nowrap" : "pr-2"}`}>{step.detail}</span>
         </li>
       ))}
     </ol>
@@ -232,10 +232,7 @@ export function Pli({
   return (
     <article>
       <header className="mb-5">
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-          <TrackingLabel code={entry.code} time={entry.time} />
-          <p className="text-[12.5px] leading-snug text-ink-500">Motif du formulaire : « {result.reason} »</p>
-        </div>
+        <TrackingLabel code={entry.code} />
         <h2 className="mt-3 text-[22px] leading-tight font-semibold tracking-[-0.015em] text-balance">
           {result.summary || result.intentLabel}
         </h2>
@@ -247,6 +244,7 @@ export function Pli({
               {result.priority === "urgente" ? "Urgent" : "Prioritaire"}
             </span>
           )}
+          <span className="text-[12.5px] text-ink-500">motif « {result.reason} »</span>
         </div>
       </header>
 
@@ -258,7 +256,7 @@ export function Pli({
         <div className="mb-2 flex items-center gap-3">
           <h3 className="text-[12.5px] font-medium text-ink-500">Message reçu</h3>
           <span className="stamp -rotate-2 rounded-full border border-ink-500 px-2 py-px text-[9.5px] text-ink-600">
-            Reçu 05.11.26 · {entry.time}
+            Reçu le 05.11.26
           </span>
         </div>
         <p className="text-[15.5px] leading-relaxed text-ink-900">{entry.message}</p>

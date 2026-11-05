@@ -89,16 +89,6 @@
     background: radial-gradient(circle at 5px 5px, var(--color-ground) 3.2px, transparent 3.6px) 0 0 / 14px 10px repeat-x;
   }
 
-  .ruled {
-    background-image: repeating-linear-gradient(
-      to bottom,
-      transparent 0,
-      transparent 31px,
-      rgb(20 22 19 / 0.07) 31px,
-      rgb(20 22 19 / 0.07) 32px
-    );
-  }
-
   .pencil-mark {
     background-image: linear-gradient(var(--color-pencil), var(--color-pencil));
     background-size: 100% 2px;
