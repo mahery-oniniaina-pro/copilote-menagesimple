@@ -10,3 +10,5 @@ next-env.d.ts
 .vercel
 .DS_Store
 .claude/
+.impeccable/review/
+.impeccable/direction-payload.json
