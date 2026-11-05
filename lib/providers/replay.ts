@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { PROMPT_VERSION } from "../prompt";
-import type { Provider } from "./types";
+import type { ModelRequest, Provider } from "./types";
 
 export type Recording = { message: string; output: unknown; durationMs: number; recordedAt: string };
 
@@ -13,12 +13,12 @@ export type RecordingFile = {
   records: Record<string, Recording>;
 };
 
-export function recordingKey(message: string): string {
-  return createHash("sha256").update(`${PROMPT_VERSION}\n${message.trim()}`).digest("hex").slice(0, 16);
+export function recordingKey(request: Pick<ModelRequest, "system" | "user">): string {
+  return createHash("sha256").update(`${request.system}\n---\n${request.user}`).digest("hex").slice(0, 16);
 }
 
 export function recordingPath(providerId: string): string {
-  return path.join(process.cwd(), "recordings", `${providerId}.json`);
+  return path.join(/* turbopackIgnore: true */ process.cwd(), "recordings", `${providerId}.json`);
 }
 
 export function readRecordings(providerId: string): RecordingFile | undefined {
@@ -33,30 +33,21 @@ export function replayProvider(providerId: string): Provider {
   return {
     id: providerId,
     label: `${recordings.label} (réponse enregistrée)`,
-    async generate({ message }) {
-      const record = recordings.records[recordingKey(message)];
-      if (!record) throw new Error("Message absent des enregistrements");
+    async generate(request) {
+      const record = recordings.records[recordingKey(request)];
+      if (!record) throw new Error("aucune réponse enregistrée pour cette consigne");
       return { output: record.output, durationMs: record.durationMs };
     },
   };
 }
 
 export function recordingProvider(inner: Provider): Provider & { save: () => void } {
-  const file: RecordingFile = readRecordings(inner.id) ?? {
-    provider: inner.id,
-    label: inner.label,
-    promptVersion: PROMPT_VERSION,
-    records: {},
-  };
-  if (file.promptVersion !== PROMPT_VERSION) {
-    file.promptVersion = PROMPT_VERSION;
-    file.records = {};
-  }
+  const file: RecordingFile = { provider: inner.id, label: inner.label, promptVersion: PROMPT_VERSION, records: {} };
   return {
     ...inner,
     async generate(request) {
       const response = await inner.generate(request);
-      file.records[recordingKey(request.message)] = {
+      file.records[recordingKey(request)] = {
         message: request.message.trim(),
         output: response.output,
         durationMs: response.durationMs,

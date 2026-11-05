@@ -63,7 +63,7 @@ export const INTENTS = {
   },
   fonctionnement_general: {
     label: "Fonctionnement du service",
-    description: "même intervenante, compte, application, avis après le ménage, horaires du service client",
+    description: "toujours la même personne qui vient, compte, application, avis après le ménage, horaires du service client",
     reason: "avant_reservation",
     route: "reponse",
     priority: "normale",
@@ -98,14 +98,14 @@ export const INTENTS = {
   },
   degat: {
     label: "Dégât ou casse",
-    description: "objet cassé, meuble abîmé, appareil qui ne marche plus après le passage",
+    description: "objet cassé, meuble abîmé, taches sur un sol ou un tissu, appareil qui ne marche plus après le passage",
     reason: "reservation_existante",
     route: "humain",
     priority: "urgente",
   },
   insatisfaction_qualite: {
     label: "Ménage pas satisfaisant",
-    description: "travail bâclé, zones oubliées, retard, comportement",
+    description: "travail bâclé, zones oubliées, retard de l'intervenante, comportement",
     reason: "reservation_existante",
     route: "humain",
     priority: "haute",
