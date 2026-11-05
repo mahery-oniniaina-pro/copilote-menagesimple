@@ -1,10 +1,8 @@
-import { STATUS_LABELS } from "@/lib/copilot";
-import { CASE_SETS, type CaseSet, type Metrics } from "@/lib/evaluation";
-import { INTENTS } from "@/lib/intents";
+import type { CaseSet, EvalRun, Metrics } from "@/lib/evaluation";
 import { loadResults } from "@/lib/results";
-import { StatusBadge } from "../components/Badges";
+import { Planche } from "../ui/Planche";
 
-export const metadata = { title: "Banc d'essai · Copilote service client" };
+export const metadata = { title: "Banc d'essai · Copilote" };
 
 const ROWS: [string, (m: Metrics) => string][] = [
   ["Cas réussis, tous critères", (m) => `${m.passed}/${m.total}`],
@@ -17,131 +15,105 @@ const ROWS: [string, (m: Metrics) => string][] = [
   ["Temps médian par message", (m) => `${(m.medianMs / 1000).toFixed(1).replace(".", ",")} s`],
 ];
 
-function pct(a: number, b: number) {
-  return b ? `${Math.round((a / b) * 100)} %` : "–";
+function readySensitive(run: EvalRun) {
+  return run.cases.filter((c) => c.expected.status.length === 1 && c.expected.status[0] === "a_transmettre" && c.result.status === "pret").length;
+}
+
+function Comparison({ runs, set, title }: { runs: EvalRun[]; set: CaseSet; title: string }) {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full min-w-[460px] border-collapse text-[13.5px]">
+        <caption className="pb-2 text-left text-[13px] font-semibold">{title}</caption>
+        <thead>
+          <tr className="border-b border-ink-900 text-left">
+            <th scope="col" className="py-2 pr-4 font-medium text-ink-500" />
+            {runs.map((run) => (
+              <th key={run.provider} scope="col" className="py-2 pr-4 text-[12.5px] font-medium">
+                {run.provider === "regles" ? "Règles sans IA" : run.label.split(" via ")[0]}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {ROWS.map(([label, value]) => (
+            <tr key={label} className="border-b border-ink-100">
+              <th scope="row" className="py-2 pr-4 text-left font-normal text-ink-600">
+                {label}
+              </th>
+              {runs.map((run) => (
+                <td key={run.provider} className="tabular py-2 pr-4 font-code text-[13px]">
+                  {value(run.metrics[set])}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
 export default function BancEssai() {
   const runs = loadResults();
   const main = runs[0];
-  if (!main) return <p>Aucun résultat : lancez <code>npm run eval</code>.</p>;
-  const sets = Object.keys(CASE_SETS) as CaseSet[];
+  if (!main) return <p className="p-8">Aucun résultat : lancez npm run eval.</p>;
+  const rules = runs.find((r) => r.provider === "regles");
   const control = main.metrics.controle;
-  const readySensitive = main.cases.filter(
-    (c) => c.expected.status.length === 1 && c.expected.status[0] === "a_transmettre" && c.result.status === "pret",
-  ).length;
 
   return (
-    <>
-      <h1>Banc d&apos;essai</h1>
-      <p className="lead">
-        60 messages inventés, chacun avec la réponse attendue. Le jeu de base suit les six motifs du formulaire de contact et
-        les thèmes des avis publics ; le jeu de contrôle a été écrit après coup, dans un style plus libre, et n&apos;a jamais
-        servi à régler quoi que ce soit. Tout se relance gratuitement avec <code>npm run eval</code>.
-      </p>
+    <main className="mx-auto w-full max-w-[1120px] px-4 py-6 md:px-8 md:py-10">
+      <header className="max-w-[70ch]">
+        <h1 className="text-[26px] leading-tight font-semibold tracking-[-0.02em]">Banc d&apos;essai</h1>
+        <p className="mt-2 text-[15px] leading-relaxed text-ink-600">
+          60 messages inventés, chacun avec la réponse attendue. Les 20 messages de contrôle ont été écrits après coup et
+          n&apos;ont jamais servi à régler le copilote : ils mesurent ce qu&apos;il fait face à des formulations qu&apos;il n&apos;a jamais
+          vues. Tout se relance gratuitement, sans modèle ni clé, avec <code className="font-code text-[13px]">npm run eval</code>.
+        </p>
+      </header>
 
-      <div className="stats">
-        <div className="card stat">
-          <strong>{pct(control.passed, control.total)}</strong>
-          <span>des messages de contrôle réussis par {main.label}</span>
+      <div className="mt-7 grid gap-px overflow-hidden rounded-lg border border-ink-150 bg-ink-150 sm:grid-cols-3">
+        <div className="bg-sheet px-5 py-4">
+          <p className="tabular font-code text-[26px] leading-none">
+            {control.passed}/{control.total}
+            {rules && <span className="ml-2 text-[14px] text-ink-400">contre {rules.metrics.controle.passed}/{rules.metrics.controle.total} sans IA</span>}
+          </p>
+          <p className="mt-2 text-[13px] text-ink-600">messages de contrôle réussis par {main.label.split(" via ")[0]}</p>
         </div>
-        <div className="card stat">
-          <strong>
-            {readySensitive}/{control.sensitive + main.metrics.base.sensitive}
-          </strong>
-          <span>cas sensibles sortis « prêts à envoyer » : argent, dégât, absence, données…</span>
+        <div className="bg-sheet px-5 py-4">
+          <p className="tabular font-code text-[26px] leading-none">
+            {readySensitive(main)}/{control.sensitive + main.metrics.base.sensitive}
+            {rules && <span className="ml-2 text-[14px] text-ink-400">contre {readySensitive(rules)} sans IA</span>}
+          </p>
+          <p className="mt-2 text-[13px] text-ink-600">cas sensibles sortis « prêts à signer » : argent, dégât, absence, données</p>
         </div>
-        <div className="card stat">
-          <strong>
-            {control.groundedReplies + main.metrics.base.groundedReplies}/{control.replies + main.metrics.base.replies}
-          </strong>
-          <span>réponses dont chaque chiffre a une source</span>
-        </div>
-        <div className="card stat">
-          <strong>0 CHF</strong>
-          <span>modèle local, rien ne sort de la machine</span>
+        <div className="bg-sheet px-5 py-4">
+          <p className="tabular font-code text-[26px] leading-none">0 CHF</p>
+          <p className="mt-2 text-[13px] text-ink-600">modèle local : aucun message client ne sort de la machine</p>
         </div>
       </div>
 
-      {sets.map((set) => (
-        <section key={set} className="card panel" style={{ marginTop: 16 }}>
-          <h2>
-            {CASE_SETS[set].label} · {main.metrics[set].total} messages
-          </h2>
-          <div className="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th />
-                  {runs.map((run) => (
-                    <th key={run.provider}>{run.label}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {ROWS.map(([label, value]) => (
-                  <tr key={label}>
-                    <td>{label}</td>
-                    {runs.map((run) => (
-                      <td key={run.provider}>{value(run.metrics[set])}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      ))}
+      <div className="mt-8 space-y-5">
+        <Planche
+          title="Jeu de contrôle"
+          note="Cliquez une case pour lire le message et l'épreuve. Barrée : ratée. Point noir : cas sensible, qui doit revenir à l'équipe."
+          cases={main.cases.filter((c) => c.set === "controle")}
+        />
+        <Planche
+          title="Jeu de base"
+          note="Écrit à partir des six motifs du formulaire de contact et des thèmes des avis publics."
+          cases={main.cases.filter((c) => c.set === "base")}
+        />
+      </div>
 
-      <section className="card panel" style={{ marginTop: 16 }}>
-        <h2>Les 60 messages, avec {main.label}</h2>
-        <p className="meta">Ouvrez une ligne pour lire la réponse préparée et les contrôles qui ont échoué.</p>
-        <div className="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Cas</th>
-                <th>Message</th>
-                <th>Attendu</th>
-                <th>Obtenu</th>
-                <th>Résultat</th>
-              </tr>
-            </thead>
-            <tbody>
-              {main.cases.map((c) => (
-                <tr key={c.id}>
-                  <td>
-                    <strong>{c.id}</strong>
-                    <div className="meta">{c.group}</div>
-                  </td>
-                  <td style={{ maxWidth: 420 }}>
-                    <details>
-                      <summary>{c.message}</summary>
-                      <p className="detail" style={{ whiteSpace: "pre-wrap", marginTop: 8 }}>
-                        {c.result.reply || "(pas de réponse)"}
-                      </p>
-                      {c.result.failedChecks.map((check) => (
-                        <p key={check.id} className="detail">
-                          ✗ {check.label} : {check.detail}
-                        </p>
-                      ))}
-                    </details>
-                  </td>
-                  <td className="detail">
-                    {c.expected.status.map((s) => STATUS_LABELS[s]).join(" ou ")}
-                    <div>{c.expected.intent.map((i) => INTENTS[i].label).join(" ou ")}</div>
-                  </td>
-                  <td>
-                    <StatusBadge status={c.result.status} />
-                    <div className="detail">{INTENTS[c.result.intent].label}</div>
-                  </td>
-                  <td>{c.score.pass ? <span className="ok">✓</span> : <span className="ko">✗</span>}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <section className="mt-10 grid gap-8 rounded-lg border border-ink-150 bg-sheet px-5 py-6 lg:grid-cols-2">
+        <Comparison runs={runs} set="controle" title="Jeu de contrôle, 20 messages" />
+        <Comparison runs={runs} set="base" title="Jeu de base, 40 messages" />
+        <p className="text-[13px] leading-relaxed text-ink-500 lg:col-span-2">
+          Les règles sans IA ont été écrites en même temps que le jeu de base : leur score y est optimiste. Le détail de chaque
+          échec et l&apos;histoire des corrections sont dans le dépôt, fichiers <code className="font-code">eval/RAPPORT.md</code> et{" "}
+          <code className="font-code">eval/JOURNAL.md</code>.
+        </p>
       </section>
-    </>
+    </main>
   );
 }
