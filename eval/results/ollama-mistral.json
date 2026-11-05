@@ -1,6 +1,6 @@
 {
   "provider": "ollama-mistral",
-  "label": "mistral via Ollama, en local",
+  "label": "Mistral 7B via Ollama, en local",
   "promptVersion": "2026-11-05.5",
   "metrics": {
     "base": {
