@@ -62,7 +62,7 @@ describe("copilote", () => {
       fakeProvider({ ...base, intention: "materiel_produits", faits_utilises: [], reponse: "Oui, prévoyez votre aspirateur." }),
     );
     expect(result.status).toBe("a_transmettre");
-    expect(result.reply).toContain("Nous la vérifions avec l'équipe");
+    expect(result.reply).toContain("Nous vérifions ce point avec l'équipe");
     expect(result.reply).not.toContain("prévoyez");
     expect(result.contradictions.map((c) => c.id)).toEqual(["C1"]);
   });
@@ -104,12 +104,32 @@ describe("copilote", () => {
         ...base,
         intention: "annuler_sauter",
         faits_utilises: [],
-        reponse: "Cliquez sur « Sauter un ménage » : c'est sans frais jusqu'à 48 heures avant, ensuite 90 % sont facturés.",
+        reponse: "Cliquez sur « Sauter un ménage » jusqu'à 48 heures avant ; ensuite, 90 % sont facturés.",
       }),
     );
     expect(result.status).toBe("pret");
     expect(result.facts.map((f) => f.id)).toContain("annulation_48h");
     expect(result.flags.some((f) => f.startsWith("Source ajoutée"))).toBe(true);
+  });
+
+  it("n'accepte un mot comme « sans frais » que s'il vient d'un fait cité par le modèle", async () => {
+    const reply = "Cliquez sur « Sauter un ménage » : c'est sans frais jusqu'à 48 heures avant, ensuite 90 % sont facturés.";
+    const uncited = await runCopilot("Comment j'annule ?", fakeProvider({ ...base, intention: "annuler_sauter", faits_utilises: [], reponse: reply }));
+    expect(uncited.status).toBe("a_revoir");
+    const cited = await runCopilot(
+      "Comment j'annule ?",
+      fakeProvider({ ...base, intention: "annuler_sauter", faits_utilises: ["annulation_48h", "sauter_menage"], reponse: reply }),
+    );
+    expect(cited.status).toBe("pret");
+  });
+
+  it("refuse un chiffre qui ressemble seulement à un chiffre vérifié", async () => {
+    const result = await runCopilot(
+      "C'est combien de l'heure ?",
+      fakeProvider({ ...base, intention: "prix_budget", faits_utilises: [], reponse: "Comptez CHF 27 de l'heure, ou CHF 1'380 par mois." }),
+    );
+    expect(result.status).toBe("a_revoir");
+    expect(result.checks.find((c) => c.id === "chiffres")?.detail).toContain("CHF 27");
   });
 
   it("renvoie à la relecture une annulation qui oublie les 90 %", async () => {

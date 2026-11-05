@@ -1,37 +1,49 @@
 import type { Intent } from "./intents";
 
+export function plainText(text: string): string {
+  return text
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[’‘`´]/g, "'")
+    .toLowerCase();
+}
+
 const RULES: { intent: Intent; pattern: RegExp }[] = [
   {
     intent: "absence_intervenante",
     pattern:
-      /n'?est (toujours )?pas (venue?|là|arrivée?|passée?)|(pas|jamais) (venue?|passée?)|personne (n'est|ne s'est) (venu|présenté)|toujours pas (là|arrivée?)|lapin|annul\w* (au )?(dernier moment|dernière minute)|(dernier moment|dernière minute)|sans (nous |me )?prévenir|didn'?t (show|come)|no[- ]show|ist nicht gekommen/i,
+      /n'?est (toujours |meme |jamais )?pas (venue?|la|arrivee?|passee?)|(pas|jamais) (venue?|passee?)\b|personne (n'est|ne s'est) (venu|presente)|ne s'est (pas|jamais) presentee?|toujours pas (la|arrivee?)|lapin|dernier moment|derniere minute|sans (nous |me )?prevenir|did ?n'?o?t (show|come|turn up)|no[- ]show|ist nicht gekommen|non e (venut|arrivat)/,
   },
   {
     intent: "degat",
-    pattern: /cass(é|ée|és|ées|e|er)(?![a-zàâäéèêëîïôöùûüç])|abîm\w*|endommag\w*|ray(é|ée|és|ées)(?![a-zàâäéèêëîïôöùûüç])|brisé\w*|dégât\w*|tach(e|es|é|ée|és|ées)(?![a-zàâäéèêëîïôöùûüç])|ne (marche|fonctionne) plus|broken|damaged|kaputt|beschädigt/i,
+    pattern:
+      /\bcass(e|ee|es|ees|er)\b|abim\w*|endommag\w*|\bray(e|ee|es|ees)\b|brise\w*|degat\w*|\btach(e|es|ee|ees)\b|ne (marche|fonctionne) plus|broken|damaged|kaputt|beschadigt|\brott[oaie]\b|danneggiat\w*/,
   },
   {
     intent: "menace_juridique",
-    pattern: /avocat|plainte|tribunal|mise en demeure|poursuites?|procès|lawyer|legal action|anwalt|klage/i,
+    pattern: /avocat|plainte|tribunal|mise en demeure|\bpoursuites?\b|\bproces\b|lawyer|legal action|anwalt|\bklage\b|avvocato|denuncia/,
   },
   {
     intent: "litige_frais",
-    pattern: /rembours\w*|abusi\w*|arnaque|escroqu\w*|injuste|contest\w*|factur\w*.{0,60}(alors que|pourtant|malgré)|refund|unfair|zurückerstatt\w*/i,
+    pattern:
+      /rembours\w*|abusi\w*|arnaque|escroqu\w*|injuste|contest\w*|refuse de payer|(factur|debit|preleve?)\w*.{0,60}(alors que|pourtant|malgre|deux fois)|refund|unfair|overcharged|zuruckerstatt\w*|rimbors\w*/,
   },
   {
     intent: "pas_de_disponibilite",
-    pattern: /disponibilit|aucun créneau|pas de créneau|rien de dispo|no (availability|slots?)|keine termine/i,
+    pattern: /disponib\w*|aucun creneau|pas de creneau|rien de dispo|no (availability|slots?)|keine termine|nessuna disponibilita/,
   },
   {
     intent: "probleme_reservation",
-    pattern: /message d'erreur|erreur|impossible de (réserver|finaliser|payer)|tourne dans le vide|\bbug\b|paiement invalide|error|fehlermeldung/i,
+    pattern: /message d'erreur|erreur|impossible de (reserver|finaliser|payer)|tourne dans le vide|\bbug\b|paiement invalide|\berror\b|fehlermeldung|errore/,
   },
   {
     intent: "donnees_personnelles",
-    pattern: /(supprim|efface)\w* .{0,40}(données|compte|informations)|mes données|droit à l'oubli|nlpd|rgpd|gdpr|delete my (data|account)|daten löschen/i,
+    pattern:
+      /(supprim|effac)\w* .{0,40}(donnees|compte|informations|infos)|fermer (mon|le) compte|mes donnees|droit a l'oubli|desinscri\w*|nlpd|rgpd|gdpr|delete my (data|account)|close my account|unsubscribe|daten loschen|cancellare i miei dati/,
   },
 ];
 
 export function detectSensitive(message: string): Intent[] {
-  return RULES.filter((r) => r.pattern.test(message)).map((r) => r.intent);
+  const plain = plainText(message);
+  return RULES.filter((r) => r.pattern.test(plain)).map((r) => r.intent);
 }

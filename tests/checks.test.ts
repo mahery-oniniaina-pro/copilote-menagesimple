@@ -5,6 +5,14 @@ import { findForbiddenPromises } from "@/lib/promises";
 import { detectSensitive } from "@/lib/sensitive";
 
 describe("chiffres d'une réponse", () => {
+  it("lit les séparateurs de milliers, les francs abrégés et les numéros internationaux", () => {
+    expect(extractClaims("CHF 1'380 par mois").map((c) => c.value)).toEqual(["1380"]);
+    expect(extractClaims("49 frs").map((c) => c.value)).toEqual(["49"]);
+    expect(extractClaims("29.90 de l'heure").map((c) => c.value)).toEqual(["29.9"]);
+    expect(extractClaims("+41 (0)22 518 90 99").map((c) => c.value)).toEqual(["0225189099"]);
+    expect(extractClaims("trois heures et demie").map((c) => c.value)).toEqual(["3.5"]);
+  });
+
   it("relève montants, pourcentages, durées et téléphones", () => {
     const claims = extractClaims("CHF 238 par mois, 90 % après 48 heures, 2h30, appelez le 022 518 90 99");
     expect(claims.map((c) => [c.kind, c.value])).toEqual([
@@ -42,6 +50,13 @@ describe("situations sensibles", () => {
     ["Merci de supprimer toutes mes données", "donnees_personnelles"],
     ["Aucune disponibilité à Genève le samedi", "pas_de_disponibilite"],
     ["Le formulaire affiche un message d'erreur", "probleme_reservation"],
+    ["Personne n’est venu ce matin", "absence_intervenante"],
+    ["L'intervenante ne s'est pas présentée", "absence_intervenante"],
+    ["Elle a abimé ma table", "degat"],
+    ["des degats sur mon parquet", "degat"],
+    ["Je souhaite fermer mon compte", "donnees_personnelles"],
+    ["Aucune intervenante disponible à Sion ?", "pas_de_disponibilite"],
+    ["Vous m'avez débité 90 % alors que j'avais annulé 3 jours avant", "litige_frais"],
   ])("« %s » passe à un humain (%s)", (message, intent) => {
     expect(detectSensitive(message)).toContain(intent);
   });

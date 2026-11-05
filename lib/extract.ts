@@ -157,8 +157,9 @@ function budgetFor(hours: number, frequency: Frequency, rate?: number): Budget {
 }
 
 export function extractRooms(text: string): number | undefined {
-  const match = text.match(/(\d(?:[.,]5)?)\s*(?:pièces|pieces|p\.|zimmer|rooms?)\b/i);
-  return match ? parseFloat(match[1].replace(",", ".")) : undefined;
+  const match = text.match(/(\d)\s*(½|[.,]5| 1\/2| et demi)?\s*-?\s*(?:pièces|pieces|p\.|zimmer|rooms?|room\b)/i);
+  if (!match) return undefined;
+  return parseInt(match[1], 10) + (match[2] ? 0.5 : 0);
 }
 
 export type MessageContext = {

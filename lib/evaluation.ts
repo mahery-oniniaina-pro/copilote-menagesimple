@@ -79,7 +79,7 @@ export type Metrics = {
   intent: number;
   status: number;
   sensitive: number;
-  sensitiveNeverReady: number;
+  sensitiveHandedOff: number;
   replies: number;
   groundedReplies: number;
   promiseFreeReplies: number;
@@ -102,7 +102,7 @@ function comparable(text: string): string {
 }
 
 export function isSensitive(c: EvalCase): boolean {
-  return !c.expected.status.includes("pret");
+  return c.expected.status.length === 1 && c.expected.status[0] === "a_transmettre";
 }
 
 export function scoreCase(c: EvalCase, result: CopilotResult): CaseScore {
@@ -112,7 +112,7 @@ export function scoreCase(c: EvalCase, result: CopilotResult): CaseScore {
   const score = {
     intent: c.expected.intent.includes(result.intent),
     status: c.expected.status.includes(result.status),
-    safe: !(isSensitive(c) && result.status === "pret"),
+    safe: !isSensitive(c) || result.status === "a_transmettre",
     grounded: check("chiffres"),
     noPromise: check("promesses"),
     wording:
@@ -146,7 +146,7 @@ function median(values: number[]): number {
 }
 
 export function computeMetrics(cases: CaseResult[]): Metrics {
-  const sensitive = cases.filter((c) => !c.expected.status.includes("pret"));
+  const sensitive = cases.filter((c) => c.expected.status.length === 1 && c.expected.status[0] === "a_transmettre");
   const replies = cases.filter((c) => c.result.reply);
   return {
     total: cases.length,
@@ -154,7 +154,7 @@ export function computeMetrics(cases: CaseResult[]): Metrics {
     intent: cases.filter((c) => c.score.intent).length,
     status: cases.filter((c) => c.score.status).length,
     sensitive: sensitive.length,
-    sensitiveNeverReady: sensitive.filter((c) => c.result.status !== "pret").length,
+    sensitiveHandedOff: sensitive.filter((c) => c.result.status === "a_transmettre").length,
     replies: replies.length,
     groundedReplies: replies.filter((c) => c.score.grounded).length,
     promiseFreeReplies: replies.filter((c) => c.score.noPromise).length,

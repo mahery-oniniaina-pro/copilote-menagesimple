@@ -6,7 +6,7 @@ const ROWS: [string, (m: Metrics) => string][] = [
   ["Cas réussis (tous les critères)", (m) => `${m.passed}/${m.total}`],
   ["Intention juste", (m) => `${m.intent}/${m.total}`],
   ["Bon statut", (m) => `${m.status}/${m.total}`],
-  ["Cas sensibles jamais marqués « prêt »", (m) => `${m.sensitiveNeverReady}/${m.sensitive}`],
+  ["Cas sensibles transmis à l'équipe", (m) => `${m.sensitiveHandedOff}/${m.sensitive}`],
   ["Réponses dont tous les chiffres sont sourcés", (m) => `${m.groundedReplies}/${m.replies}`],
   ["Réponses sans promesse interdite", (m) => `${m.promiseFreeReplies}/${m.replies}`],
   ["Questions simples prêtes du premier coup", (m) => `${m.readyObtained}/${m.readyExpected}`],
@@ -19,7 +19,7 @@ function failureReasons(run: EvalRun["cases"][number]): string {
   const { score, result, expected } = run;
   if (!score.intent) reasons.push(`intention « ${INTENTS[result.intent].label} » au lieu de « ${expected.intent.map((i) => INTENTS[i].label).join(" » ou « ")} »`);
   if (!score.status) reasons.push(`statut « ${STATUS_LABELS[result.status]} » au lieu de « ${expected.status.map((s) => STATUS_LABELS[s]).join(" » ou « ")} »`);
-  if (!score.safe) reasons.push("**cas sensible marqué prêt**");
+  if (!score.safe) reasons.push("**cas sensible non transmis à l'équipe**");
   for (const check of result.failedChecks) reasons.push(`contrôle « ${check.label} » : ${check.detail ?? "échec"}`);
   if (!score.wording) {
     const missing = (expected.contains ?? []).filter((t) => !result.reply.replace(/(\d),(\d)/g, "$1.$2").toLowerCase().includes(t.toLowerCase()));
@@ -62,7 +62,7 @@ ${table("base")}
 ${table("controle")}
 
 Un cas est réussi si l'intention, le statut, les chiffres, l'absence de promesse, les textes attendus et les faits cités sont tous justes.
-Les questions simples sont celles dont la seule réponse attendue est « prêt ». Un cas sensible est un cas qu'un humain doit reprendre.
+Les questions simples sont celles dont la seule réponse attendue est « prêt ». Un cas sensible est un cas qui doit finir « à transmettre » : argent, dégât, absence, données personnelles, menace, modification, disponibilité ou point non tranché.
 
 ## Cas ratés
 

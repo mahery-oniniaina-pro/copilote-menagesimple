@@ -1,10 +1,10 @@
-import { extractClaims, sameNumber } from "./claims";
+import { extractClaims, sameNumber, type ClaimKind } from "./claims";
 import { detectLanguage, type MessageContext } from "./extract";
 import { INTENTS, type Priority, type Route } from "./intents";
 import type { Contradiction, Fact, Knowledge } from "./knowledge";
 import type { ModelOutput } from "./prompt";
 import { findForbiddenPromises } from "./promises";
-import { detectSensitive } from "./sensitive";
+import { detectSensitive, plainText } from "./sensitive";
 import { normalize } from "./text";
 
 export type Check = { id: string; label: string; ok: boolean; detail?: string };
@@ -22,12 +22,15 @@ export type Verification = {
 const PRIORITY_RANK: Record<Priority, number> = { normale: 0, haute: 1, urgente: 2 };
 
 function openTopics(intent: keyof typeof INTENTS, message: string, context: MessageContext): string[] {
+  const plain = plainText(message);
   const topics: string[] = [];
-  if (intent === "materiel_produits" && /aspirateur|serpill|balai|produits?|matériel/i.test(message) && !/vitre|repass/i.test(message)) {
-    topics.push("C1");
+  const regularEquipment = /aspirateur|serpill|balai|produits (de nettoyage|menagers)|vacuum|\bmop\b|cleaning (products|supplies)|staubsauger|putzmittel|aspirapolvere/;
+  if (regularEquipment.test(plain) || (intent === "materiel_produits" && !/vitre|repass|window|fenster/.test(plain))) topics.push("C1");
+  const asksDuration = intent === "duree_conseillee" || /combien d'heures|how (many|long)|wie (viele|lange)|quante ore/.test(plain);
+  if (asksDuration && context.rooms && context.rooms >= 3 && context.rooms <= 4.5) topics.push("C3");
+  if (/quand .{0,40}(debit|preleve|paye)|avant ou apres le menage|when .{0,30}(charged|debited|pay)|wann .{0,30}(belastet|abgebucht)/.test(plain)) {
+    topics.push("C4");
   }
-  if (intent === "duree_conseillee" && context.rooms && context.rooms >= 3 && context.rooms <= 4.5) topics.push("C3");
-  if (intent === "paiement_facturation" && /quand|débit|prélev|avant ou après|moment/i.test(message)) topics.push("C4");
   return topics;
 }
 
@@ -36,12 +39,13 @@ const RELATED_CONTRADICTIONS: Partial<Record<keyof typeof INTENTS, string[]>> = 
   annuler_sauter: ["C5"],
 };
 
-function allowedNumbers(cited: Fact[], context: MessageContext): string[] {
+function allowedNumbers(cited: Fact[], context: MessageContext, kind: ClaimKind): string[] {
   const values = cited.filter((f) => f.status === "verified").flatMap((f) => f.values);
   for (const budget of [context.budget, context.budgetExample]) {
     if (!budget) continue;
     values.push(String(budget.hours), String(budget.visitsPerYear), String(budget.monthly), "43.90", "12");
   }
+  if (kind === "montant" || kind === "pourcentage") return values;
   return [...values, ...context.numbers.map(String)];
 }
 
@@ -98,13 +102,11 @@ export function verify(
     detail: unknownFactIds.length ? `Identifiants inconnus : ${unknownFactIds.join(", ")}` : undefined,
   });
 
-  const allowed = allowedNumbers(cited, context);
+  const citedByModel = [...verified];
   const unsupported = [];
   for (const claim of extractClaims(reply)) {
-    if (allowed.some((v) => sameNumber(claim.value, v))) continue;
-    const source = knowledge.facts.find(
-      (f) => f.status === "verified" && normalize(`${f.statement} ${f.quote}`).includes(normalize(claim.raw)),
-    );
+    if (allowedNumbers(cited, context, claim.kind).some((v) => sameNumber(claim.value, v))) continue;
+    const source = knowledge.facts.find((f) => f.status === "verified" && f.values.some((v) => sameNumber(claim.value, v)));
     if (source) {
       if (!cited.includes(source)) {
         cited.push(source);
@@ -124,7 +126,7 @@ export function verify(
 
   const promises = findForbiddenPromises(
     reply,
-    verified.flatMap((f) => [f.statement, f.quote]),
+    citedByModel.flatMap((f) => [f.statement, f.quote]),
   );
   checks.push({
     id: "promesses",
@@ -143,7 +145,7 @@ export function verify(
   }
 
   if (output.intention === "annuler_sauter" && route === "reponse") {
-    const complete = /\b48\b/.test(reply) && /\b90\s?%/.test(reply);
+    const complete = /(?<![\d.,'’])48(?!\d)/.test(reply) && /(?<![\d.,'’])90\s?%/.test(reply);
     checks.push({
       id: "regle_annulation",
       label: "Règle d'annulation complète",
@@ -154,11 +156,12 @@ export function verify(
 
   if (context.budget && output.intention === "prix_budget") {
     const expected = context.budget.monthly;
+    const found = extractClaims(reply).some((c) => c.kind === "montant" && sameNumber(c.value, String(expected)));
     checks.push({
       id: "calcul",
       label: "Budget juste",
-      ok: new RegExp(`\\b${expected}\\b`).test(reply),
-      detail: new RegExp(`\\b${expected}\\b`).test(reply) ? undefined : `Le montant attendu est CHF ${expected} par mois`,
+      ok: found,
+      detail: found ? undefined : `Le montant attendu est CHF ${expected} par mois`,
     });
   }
 

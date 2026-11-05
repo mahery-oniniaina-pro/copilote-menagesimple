@@ -17,10 +17,10 @@ const SIGN_OFFS: Record<Language, string> = {
 const GREETING = /^(bonjour|bonsoir|madame|monsieur|cher|chère|hello|hi\b|dear|good (morning|afternoon|evening)|guten (tag|morgen|abend)|hallo|sehr geehrte|liebe|buongiorno|buonasera|gentile)/i;
 
 const HOLDING: Record<Language, string> = {
-  fr: "Merci pour votre question. Nous la vérifions avec l'équipe et revenons vers vous rapidement.",
-  en: "Thank you for your question. We are checking it with the team and will get back to you shortly.",
-  de: "Vielen Dank für Ihre Frage. Wir klären sie mit dem Team und melden uns rasch bei Ihnen.",
-  it: "Grazie per la sua domanda. La verifichiamo con il team e le rispondiamo al più presto.",
+  fr: "Merci pour votre message. Nous vérifions ce point avec l'équipe et revenons vers vous rapidement.",
+  en: "Thank you for your message. We are checking this with the team and will get back to you shortly.",
+  de: "Vielen Dank für Ihre Nachricht. Wir klären diesen Punkt mit dem Team und melden uns rasch bei Ihnen.",
+  it: "Grazie per il suo messaggio. Verifichiamo questo punto con il team e le rispondiamo al più presto.",
 };
 
 export function holdingReply(language: Language): string {
