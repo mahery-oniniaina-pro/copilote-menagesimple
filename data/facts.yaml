@@ -105,7 +105,7 @@
 
 - id: annulation_48h
   topic: reservation
-  statement: Une réservation peut être annulée ou modifiée jusqu'à 48 heures avant. Passé ce délai, le service est facturé à 90 %.
+  statement: Une réservation peut être annulée ou modifiée sans frais jusqu'à 48 heures avant. Passé ce délai, le service est facturé à 90 %.
   values: ["48", "90"]
   source: https://menagesimple.com/conditions-generales/
   quote: Une réservation peut être annulée ou modifiée 48 heures à l’avance. Passé ce délai, le service sera facturé à 90%.
