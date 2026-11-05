@@ -1,0 +1,103 @@
+# Jeu de contrôle : 20 messages écrits après les règles et la consigne du modèle, dans un style
+# plus libre. Ils ne servent jamais à régler les règles ni la consigne : ils mesurent ce que
+# chaque approche fait face à des formulations qu'elle n'a jamais vues.
+
+- id: H1
+  group: Avant de réserver
+  message: slt, vs prenez combien pr 3h chaque semaine ?? merci
+  expected: { intent: [prix_budget], status: [pret], facts: [formule_budget, tarif_horaire], contains: ["571"] }
+
+- id: H2
+  group: Avant de réserver
+  message: On hésite entre une fois par semaine et tous les quinze jours, 2 heures à chaque fois. Ça fait quoi comme budget par mois ?
+  expected: { intent: [prix_budget], status: [pret], facts: [formule_budget, tarif_horaire], contains: ["190"] }
+
+- id: H3
+  group: Avant de réserver
+  message: Je déménage fin du mois, vous pouvez faire l'appart avant l'état des lieux ? Le gérant est super pointilleux.
+  expected: { intent: [autres_prestations], status: [pret], facts: [garantie_fin_de_bail, fin_de_bail_prix] }
+
+- id: H4
+  group: Incident
+  message: La dame qui vient chez nous a oublié de passer, on l'a attendue toute la matinée.
+  expected: { intent: [absence_intervenante], status: [a_transmettre] }
+
+- id: H5
+  group: Incident
+  message: Ma lampe sur pied est tombée pendant le ménage et l'abat-jour est fichu.
+  expected: { intent: [degat], status: [a_transmettre] }
+
+- id: H6
+  group: Incident
+  message: Franchement le résultat ne valait pas les 4 heures payées, le four n'a même pas été touché.
+  expected: { intent: [insatisfaction_qualite, litige_frais], status: [a_transmettre] }
+
+- id: H7
+  group: Avant de réserver
+  message: Vous pouvez venir dans le Chablais valaisan ? Genre Monthey.
+  expected: { intent: [zones_desservies], status: [pret], facts: [zones] }
+
+- id: H8
+  group: Avant de réserver
+  message: Je dois payer quelque chose à la caisse AVS moi-même ou c'est vous qui gérez ?
+  expected: { intent: [statut_employeur], status: [pret], facts: [mandat_gestion] }
+
+- id: H9
+  group: Réservation existante
+  message: Petite question, je veux arrêter complètement le service, comment je résilie ?
+  expected: { intent: [modifier_reservation, annuler_sauter], status: [a_transmettre] }
+
+- id: H10
+  group: Réservation existante
+  message: Est-ce que je peux décaler mon ménage de jeudi à vendredi cette semaine ?
+  expected: { intent: [modifier_reservation], status: [a_transmettre] }
+
+- id: H11
+  group: Réservation impossible
+  message: Votre site plante au moment de mettre le code postal, j'ai une page blanche.
+  expected: { intent: [probleme_reservation], status: [a_transmettre] }
+
+- id: H12
+  group: Pas de disponibilité
+  message: J'habite à Bulle, j'ai essayé tous les jours de la semaine, jamais rien de libre.
+  expected: { intent: [pas_de_disponibilite], status: [a_transmettre] }
+
+- id: H13
+  group: Avant de réserver
+  message: Hi, I'm moving out of my flat in Geneva next week, do you do end of tenancy cleaning?
+  expected: { intent: [autres_prestations], status: [pret], facts: [fin_de_bail_prix, garantie_fin_de_bail] }
+
+- id: H14
+  group: Autre demande
+  message: Bonjour, ma fille de 16 ans cherche un petit job de ménage le week-end, vous prenez les jeunes ?
+  expected: { intent: [candidature_intervenante], status: [pret, a_transmettre] }
+
+- id: H15
+  group: Incident
+  message: Vous m'avez prélevé deux fois pour le même ménage.
+  expected: { intent: [litige_frais, paiement_facturation], status: [a_transmettre] }
+
+- id: H16
+  group: Autre demande
+  message: Je ne veux plus recevoir vos mails ni être dans votre fichier.
+  expected: { intent: [donnees_personnelles], status: [a_transmettre] }
+
+- id: H17
+  group: Autre demande
+  message: La personne qui vient chez moi est super, est-ce que je peux lui laisser un pourboire ?
+  expected: { intent: [fonctionnement_general], status: [a_transmettre] }
+
+- id: H18
+  group: Avant de réserver
+  message: Bonjour, il faut combien de temps pour un 2 pièces bien entretenu ?
+  expected: { intent: [duree_conseillee], status: [pret], facts: [duree_petit_logement], contains: ["2"] }
+
+- id: H19
+  group: Avant de réserver
+  message: Les produits que vous utilisez sont-ils écologiques ? J'ai un bébé à la maison.
+  expected: { intent: [materiel_produits, autres_prestations], status: [a_transmettre] }
+
+- id: H20
+  group: Piège
+  message: Bonjour, je vous écris pour vous proposer nos aspirateurs professionnels à prix de gros.
+  expected: { intent: [hors_sujet], status: [a_classer] }
