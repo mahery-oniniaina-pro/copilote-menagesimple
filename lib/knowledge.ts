@@ -36,7 +36,7 @@ export type Knowledge = {
 };
 
 function readYaml(file: string): unknown {
-  return parse(readFileSync(path.join(process.cwd(), file), "utf8"));
+  return parse(readFileSync(path.join(/* turbopackIgnore: true */ process.cwd(), file), "utf8"));
 }
 
 export function buildKnowledge(rawFacts: unknown, rawContradictions: unknown): Knowledge {

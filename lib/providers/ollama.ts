@@ -6,7 +6,7 @@ export function ollamaProvider(options: { url?: string; model?: string } = {}): 
 
   return {
     id: `ollama-${model.replace(/[^a-z0-9.]+/gi, "-")}`,
-    label: `${model} via Ollama, en local`,
+    label: `${model === "mistral" ? "Mistral 7B" : model} via Ollama, en local`,
     async generate({ system, user, schema }) {
       const started = Date.now();
       const response = await fetch(`${url}/api/chat`, {

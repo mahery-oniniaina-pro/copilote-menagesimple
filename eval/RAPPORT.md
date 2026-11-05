@@ -9,7 +9,7 @@ Généré par `npm run eval`. Réponses des modèles enregistrées le 5 novembre
 
 ### Jeu de base (40 messages)
 
-| | mistral via Ollama, en local | Règles et modèles de réponse, sans IA |
+| | Mistral 7B via Ollama, en local | Règles et modèles de réponse, sans IA |
 | --- | --- | --- |
 | Cas réussis (tous les critères) | 27/40 | 36/40 |
 | Intention juste | 34/40 | 38/40 |
@@ -23,7 +23,7 @@ Généré par `npm run eval`. Réponses des modèles enregistrées le 5 novembre
 
 ### Jeu de contrôle (20 messages)
 
-| | mistral via Ollama, en local | Règles et modèles de réponse, sans IA |
+| | Mistral 7B via Ollama, en local | Règles et modèles de réponse, sans IA |
 | --- | --- | --- |
 | Cas réussis (tous les critères) | 15/20 | 5/20 |
 | Intention juste | 17/20 | 6/20 |
@@ -40,7 +40,7 @@ Les questions simples sont celles dont la seule réponse attendue est « prêt �
 
 ## Cas ratés
 
-### mistral via Ollama, en local
+### Mistral 7B via Ollama, en local
 
 - **A3** (Avant de réserver) : ne cite pas duree_minimale.
 - **B1** (Réservation existante) : statut « À revoir » au lieu de « Prêt à envoyer après relecture » ; contrôle « Aucune promesse » : gratuité (« sans frais »).
