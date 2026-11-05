@@ -1,0 +1,85 @@
+# Points sur lesquels le site public de MénageSimple se contredit (relevé du 5 novembre 2026).
+# Tant que "decision" est vide, le copilote ne tranche pas : il transmet la demande à l'équipe.
+
+- id: C1
+  title: Qui apporte le matériel du ménage régulier ?
+  sources:
+    - page: Accueil et FAQ
+      url: https://menagesimple.com/
+      quote: Les produits de nettoyage sont inclus. Pour un ménage standard, prévoyez votre aspirateur et votre balai-serpillière ; vérifiez les options de matériel à la réservation.
+    - page: FAQ, même page
+      url: https://menagesimple.com/questions-frequentes-menage/
+      quote: "Les femmes de ménage disposent de leur propre matériel et de leurs produits de nettoyage : aspirateur, balai, serpillière etc."
+    - page: Guide du ménage à domicile
+      url: https://menagesimple.com/menage-domicile-suisse-guide/
+      quote: En règle générale, oui. Le client fournit l’aspirateur, la serpillière et les produits. Certaines agences, dont MénageSimple, peuvent fournir des produits professionnels sur demande.
+  impact: >-
+    Trois réponses à une question posée avant chaque première réservation. Un avis Google récent :
+    « N'ont pas le matériel.. aspirateur facturé ».
+  proposal: >-
+    Une seule phrase, la même partout, par exemple : « Les produits sont inclus. L'aspirateur et le balai-serpillière
+    sont à fournir, ou à ajouter en option lors de la réservation. » (à valider selon le fonctionnement réel).
+  decision: null
+
+- id: C2
+  title: Budgets mensuels du guide calculés sans la TVA
+  sources:
+    - page: Guide du ménage à domicile
+      url: https://menagesimple.com/menage-domicile-suisse-guide/
+      quote: "3 à 4 pièces (2h30 par semaine) : environ CHF 440/mois"
+    - page: Article du 26 octobre 2026
+      url: https://menagesimple.com/faire-le-menage-quelle-frequence-heures-chiffres/
+      quote: "Coûts mensuels : durée x CHF 43.90 x nombre de passages par an, divisé par 12."
+  impact: >-
+    Le guide annonce CHF 175, 440 et 615 par mois ; avec le tarif TTC de CHF 43.90, la même formule donne CHF 190, 476
+    et 666. Les chiffres du guide correspondent au prix hors taxe (CHF 40.61) : le client sous-estime son budget de 8 %.
+  proposal: Reprendre les montants de l'article (TTC) dans le guide, ou renvoyer vers l'article.
+  decision: null
+
+- id: C3
+  title: Durée conseillée pour un 3 à 4 pièces
+  sources:
+    - page: Guide du ménage à domicile
+      url: https://menagesimple.com/menage-domicile-suisse-guide/
+      quote: Pour un appartement standard (3-4 pièces), comptez 3 à 4 heures par passage.
+    - page: Guide du ménage à domicile, même page
+      url: https://menagesimple.com/menage-domicile-suisse-guide/
+      quote: "3 à 4 pièces (2h30 par semaine) : environ CHF 440/mois"
+    - page: Article du 26 octobre 2026
+      url: https://menagesimple.com/faire-le-menage-quelle-frequence-heures-chiffres/
+      quote: "2h30 à 3h : un 3,5 à 4,5 pièces, ou un logement avec enfants ;"
+  impact: >-
+    « Deux heures, ça suffit ? » est l'une des deux questions les plus posées avant une première réservation,
+    selon l'article. Le guide y répond de deux façons, et l'article d'une troisième.
+  proposal: Aligner le guide sur les données réelles de l'article (durée médiane 2 h 30).
+  decision: null
+
+- id: C4
+  title: Comment le client paie
+  sources:
+    - page: FAQ
+      url: https://menagesimple.com/questions-frequentes-menage/
+      quote: "Prise d’empreinte ou pré-autorisation : 5 jours avant la date prévue de votre ménage"
+    - page: Conditions générales du 15.07.2026
+      url: https://menagesimple.com/conditions-generales/
+      quote: ouvre pour le cocontractant un compte personnel que celui-ci créditera par des versements anticipés
+  impact: >-
+    Carte débitée après le ménage selon la FAQ, compte à créditer à l'avance selon les CGU. En cas de litige,
+    c'est le texte des CGU qui sera opposé au client.
+  proposal: Mettre à jour la FAQ ou les CGU pour décrire le fonctionnement réel.
+  decision: null
+
+- id: C5
+  title: Les CGU renvoient au mauvais article pour les frais d'annulation
+  sources:
+    - page: Conditions générales
+      url: https://menagesimple.com/conditions-generales/
+      quote: Les annulations effectuées sous 48 heures sont soumises à des frais comme décrit au point 10d.
+    - page: Conditions générales, même page
+      url: https://menagesimple.com/conditions-generales/
+      quote: 10c. Annulation des services
+  impact: >-
+    Les frais de 90 % figurent au point 10c ; le point 10d parle des photographies. Les frais d'annulation reviennent
+    dans les avis négatifs (« 90% de frais à 45h ») : un renvoi faux affaiblit la position de MénageSimple en cas de litige.
+  proposal: Remplacer « point 10d » par « point 10c ».
+  decision: null

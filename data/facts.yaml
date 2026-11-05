@@ -1,0 +1,358 @@
+# Fiche de faits MénageSimple, relevée sur le site public le 5 novembre 2026.
+#
+# Le copilote ne peut citer que les faits "verified". Un fait "contradictory" signale
+# un point sur lequel le site se contredit : le copilote transmet alors la demande à
+# l'équipe au lieu de trancher. Pour trancher, corriger le site, mettre à jour la
+# citation ci-dessous et repasser le statut à "verified".
+#
+# "values" liste les nombres que le copilote a le droit d'écrire quand il cite le fait.
+# "quote" doit rester une phrase présente telle quelle sur la page "source" :
+# `npm run check-site` le vérifie.
+
+- id: tarif_horaire
+  topic: prix
+  statement: Le ménage régulier coûte CHF 43.90 de l'heure, TVA comprise.
+  values: ["43.90"]
+  source: https://menagesimple.com/faire-le-menage-quelle-frequence-heures-chiffres/
+  quote: Au tarif de CHF 43.90 de l’heure
+  status: verified
+
+- id: tarif_frequences
+  topic: prix
+  statement: Ce tarif horaire s'applique au ménage régulier, avec un passage chaque semaine ou toutes les deux semaines.
+  values: ["43.90"]
+  source: https://menagesimple.com/menage-domicile-suisse-guide/
+  quote: le ménage régulier commence à CHF 43.90 de l’heure pour un passage chaque semaine ou toutes les deux semaines
+  status: verified
+
+- id: tva
+  topic: prix
+  statement: Les CHF 43.90 TTC correspondent à CHF 40.61 hors taxe et CHF 3.29 de TVA à 8,1 %.
+  values: ["43.90", "40.61", "3.29", "8.1"]
+  source: https://menagesimple.com/menage-domicile-suisse-guide/
+  quote: Pour CHF 43.90 TTC, le montant hors taxe est de CHF 40.61 et la TVA de CHF 3.29.
+  status: verified
+
+- id: detail_prix
+  topic: prix
+  statement: >-
+    Sur CHF 43.90 : salaire brut vacances comprises CHF 27.16, matériel, produits et déplacements CHF 1.02,
+    LPP CHF 1.53, charges sociales CHF 5.62, perte de gain maladie CHF 0.48, TVA CHF 3.29, recrutement,
+    accompagnement, service client, remplacement, encaissement et sinistres CHF 4.00, reste à MénageSimple CHF 0.80.
+  values: ["43.90", "27.16", "1.02", "1.53", "5.62", "0.48", "3.29", "4.00", "0.80"]
+  source: https://menagesimple.com/
+  quote: Recrutement, accompagnement, service client, remplacement, encaissement et sinistres CHF 4.00
+  status: verified
+
+- id: formule_budget
+  topic: prix
+  statement: >-
+    Coût mensuel = durée × CHF 43.90 × nombre de passages par an ÷ 12. Chaque semaine : 52 passages par an ;
+    toutes les deux semaines : 26 ; toutes les quatre semaines : 13.
+  values: ["43.90", "52", "26", "13", "12"]
+  source: https://menagesimple.com/faire-le-menage-quelle-frequence-heures-chiffres/
+  quote: "Coûts mensuels : durée x CHF 43.90 x nombre de passages par an, divisé par 12."
+  status: verified
+
+- id: frequence_courante
+  topic: conseil
+  statement: Chez les clients installés, la fréquence la plus courante est toutes les deux semaines (55 %), puis chaque semaine (33 %).
+  values: ["55", "33"]
+  source: https://menagesimple.com/faire-le-menage-quelle-frequence-heures-chiffres/
+  quote: "toutes les deux semaines : 55%"
+  status: verified
+
+- id: duree_minimale
+  topic: duree
+  statement: La durée minimale d'un passage est de 2 heures.
+  values: ["2"]
+  source: https://menagesimple.com/menage-domicile-suisse-guide/
+  quote: Chez MénageSimple, la durée minimale est de 2 heures.
+  status: verified
+
+- id: duree_mediane
+  topic: duree
+  statement: La durée médiane d'une visite est de 2 h 30.
+  values: ["2.5"]
+  source: https://menagesimple.com/faire-le-menage-quelle-frequence-heures-chiffres/
+  quote: La durée médiane d’une visite est de 2h30.
+  status: verified
+
+- id: duree_petit_logement
+  topic: duree
+  statement: 2 heures conviennent pour un studio ou un 2,5 pièces entretenu régulièrement.
+  values: ["2", "2.5"]
+  source: https://menagesimple.com/faire-le-menage-quelle-frequence-heures-chiffres/
+  quote: "2h : un studio ou un 2,5 pièces entretenu régulièrement ;"
+  status: verified
+
+- id: duree_grand_logement
+  topic: duree
+  statement: Il faut compter 4 heures et plus pour une maison, un grand appartement, ou un passage moins fréquent.
+  values: ["4"]
+  source: https://menagesimple.com/faire-le-menage-quelle-frequence-heures-chiffres/
+  quote: "4h et plus : une maison, un grand appartement, ou un passage moins fréquent qui doit rattraper plus de travail."
+  status: verified
+
+- id: duree_moyen_logement
+  topic: duree
+  statement: Durée conseillée pour un 3 à 4,5 pièces. L'article dit 2 h 30 à 3 h, le guide dit 3 à 4 heures.
+  values: ["2.5", "3", "4"]
+  source: https://menagesimple.com/faire-le-menage-quelle-frequence-heures-chiffres/
+  quote: "2h30 à 3h : un 3,5 à 4,5 pièces, ou un logement avec enfants ;"
+  status: contradictory
+  contradiction: C3
+
+- id: annulation_48h
+  topic: reservation
+  statement: Une réservation peut être annulée ou modifiée jusqu'à 48 heures avant. Passé ce délai, le service est facturé à 90 %.
+  values: ["48", "90"]
+  source: https://menagesimple.com/conditions-generales/
+  quote: Une réservation peut être annulée ou modifiée 48 heures à l’avance. Passé ce délai, le service sera facturé à 90%.
+  status: verified
+
+- id: annulation_gratuite
+  topic: reservation
+  statement: L'annulation est gratuite jusqu'à 48 heures avant le ménage.
+  values: ["48"]
+  source: https://menagesimple.com/questions-frequentes-menage/
+  quote: Annulation gratuite jusqu’à 48H avant le ménage
+  status: verified
+
+- id: sauter_menage
+  topic: reservation
+  statement: Pour annuler un ménage, le client clique sur le bouton « Sauter un ménage » depuis son compte.
+  values: []
+  source: https://menagesimple.com/questions-frequentes-menage/
+  quote: Annuler un ménage est très simple, il vous suffit de cliquer sur le bouton » Sauter un ménage » depuis votre compte.
+  status: verified
+
+- id: modifier_recurrent
+  topic: reservation
+  statement: Le ménage récurrent peut être modifié à tout moment, avec 48 heures de préavis.
+  values: ["48"]
+  source: https://menagesimple.com/questions-frequentes-menage/
+  quote: Vous pouvez modifier votre ménage récurrent à tout moment.
+  status: verified
+
+- id: paiement_moment
+  topic: paiement
+  statement: >-
+    Selon la FAQ, la carte est pré-autorisée 5 jours avant le ménage puis débitée la nuit suivante.
+    Selon les CGU, le client crédite à l'avance un compte personnel.
+  values: ["5"]
+  source: https://menagesimple.com/questions-frequentes-menage/
+  quote: "Prise d’empreinte ou pré-autorisation : 5 jours avant la date prévue de votre ménage"
+  status: contradictory
+  contradiction: C4
+
+- id: carte_modifier
+  topic: paiement
+  statement: La carte de crédit s'ajoute ou se modifie dans la section « Détails de paiement » du compte.
+  values: []
+  source: https://menagesimple.com/questions-frequentes-menage/
+  quote: Dans la section » Détails de paiement » vous pourrez ajouter/modifier la carte de crédit associée à votre compte.
+  status: verified
+
+- id: compte_automatique
+  topic: compte
+  statement: Le compte MénageSimple est créé automatiquement après la première réservation.
+  values: []
+  source: https://menagesimple.com/questions-frequentes-menage/
+  quote: Votre compte MénageSimple est créé automatiquement après votre première réservation.
+  status: verified
+
+- id: application
+  topic: compte
+  statement: La réservation se gère sur téléphone avec l'application, ou depuis un ordinateur.
+  values: []
+  source: https://menagesimple.com/
+  quote: Gérez votre réservation sur votre téléphone ou depuis votre ordinateur.
+  status: verified
+
+- id: support_horaires
+  topic: contact
+  statement: Le service client répond par chat, e-mail ou téléphone du lundi au vendredi, de 8 h à 19 h.
+  values: ["8", "19"]
+  source: https://menagesimple.com/
+  quote: Disponible par chat, email ou téléphone du Lundi au Vendredi de 8H00 à 19H00.
+  status: verified
+
+- id: contact_coordonnees
+  topic: contact
+  statement: E-mail hello@menagesimple.com, téléphone 022 518 90 99.
+  values: ["0225189099"]
+  source: https://menagesimple.com/contact-satisfaction-client/
+  quote: hello@menagesimple.com
+  status: verified
+
+- id: rappel_gratuit
+  topic: contact
+  statement: Le client peut planifier un rappel gratuit depuis la page contact.
+  values: []
+  source: https://menagesimple.com/contact-satisfaction-client/
+  quote: Planifier un rappel gratuit
+  status: verified
+
+- id: meme_intervenante
+  topic: fonctionnement
+  statement: MénageSimple privilégie le même intervenant lorsque c'est possible et organise un remplacement si besoin.
+  values: []
+  source: https://menagesimple.com/a-propos-de-menagesimple/
+  quote: Nous privilégions le même intervenant lorsque possible et organisons un remplacement si besoin.
+  status: verified
+
+- id: avis_lendemain
+  topic: qualite
+  statement: Le lendemain de chaque ménage, le client reçoit un e-mail pour donner son avis ; l'intervenant voit ses remarques.
+  values: []
+  source: https://menagesimple.com/
+  quote: Le lendemain, vous recevez un e-mail pour partager votre avis.
+  status: verified
+
+- id: repasse_insatisfaction
+  topic: qualite
+  statement: Si le ménage n'est pas satisfaisant, MénageSimple repasse ; le client signale les points à reprendre à l'équipe.
+  values: []
+  source: https://menagesimple.com/questions-frequentes-menage/
+  quote: Nous repassons si le ménage n’est pas satisfaisant.
+  status: verified
+
+- id: assurance_rc
+  topic: sinistre
+  statement: Tous les services sont couverts par une assurance responsabilité civile AXA, jusqu'à CHF 10 millions.
+  values: ["10"]
+  source: https://menagesimple.com/
+  quote: Tous les services MénageSimple sont couverts par notre assurance responsabilité civile AXA, jusqu’à CHF 10 millions.
+  status: verified
+
+- id: photos_client
+  topic: sinistre
+  statement: Les photos envoyées par le client sont traitées de façon confidentielle, pour la gestion du service et des réclamations.
+  values: []
+  source: https://menagesimple.com/conditions-generales/
+  quote: Lorsque le client transmet lui-même des photographies à MénageSimple SA, celles-ci sont traitées selon les mêmes principes de finalité, de proportionnalité et de confidentialité.
+  status: verified
+
+- id: mandat_gestion
+  topic: employeur
+  statement: >-
+    Le client est l'employeur de son employé de ménage. Par un mandat de gestion, MénageSimple facilite la déclaration
+    AVS, le paiement du salaire, des impôts et des cotisations sociales, et établit les décomptes de salaires.
+  values: []
+  source: https://menagesimple.com/questions-frequentes-menage/
+  quote: nous facilitons la déclaration aux caisses AVS de votre nouvel employé
+  status: verified
+
+- id: laa_allianz
+  topic: employeur
+  statement: MénageSimple facilite et négocie le paiement de l'assurance-accident LAA avec Allianz.
+  values: []
+  source: https://menagesimple.com/questions-frequentes-menage/
+  quote: Facilitation et négociation du paiement de l’assurance-accident LAA avec Allianz
+  status: verified
+
+- id: zones
+  topic: zones
+  statement: MénageSimple intervient dans les cantons de Vaud, Valais, Genève, Fribourg et Neuchâtel.
+  values: []
+  source: https://menagesimple.com/
+  quote: Vaud Valais Genève Fribourg Neuchâtel
+  status: verified
+
+- id: chaux_de_fonds
+  topic: zones
+  statement: MénageSimple a annoncé son arrivée à La Chaux-de-Fonds le 20 octobre 2026.
+  values: ["20", "2026"]
+  source: https://menagesimple.com/blog/
+  quote: MénageSimple arrive à La Chaux-de-Fonds
+  status: verified
+
+- id: garantie_fin_de_bail
+  topic: prestations
+  statement: >-
+    Fin de bail : si la régie refuse le travail, MénageSimple garantit gratuitement un deuxième passage, sur justificatifs,
+    à condition que le logement ait été entretenu dans les 30 jours précédents et entièrement vidé.
+  values: ["30"]
+  source: https://menagesimple.com/conditions-generales/
+  quote: MénageSimple SA garantit gratuitement, contre justificatifs, un deuxième passage pour compléter le travail dans les plus brefs délais.
+  status: verified
+
+- id: fin_de_bail_prix
+  topic: prestations
+  statement: Pour une fin de bail, le prix s'affiche avant confirmation dans le formulaire ; produits et matériel sont inclus.
+  values: []
+  source: https://menagesimple.com/nettoyage-fin-de-bail/
+  quote: Le prix de votre nettoyage s’affiche avant confirmation. Produits et matériel de nettoyage sont inclus.
+  status: verified
+
+- id: menage_a_fond
+  topic: prestations
+  statement: Le ménage à fond se fait sur devis gratuit, selon la surface en m² et les options ; ce n'est pas le tarif horaire du ménage régulier.
+  values: []
+  source: https://menagesimple.com/menage-a-fond/
+  quote: Le prix du ménage à fond dépend de la surface du logement en m² et des options choisies.
+  status: verified
+
+- id: vitres_materiel
+  topic: prestations
+  statement: Pour le nettoyage des vitres, l'équipe apporte le matériel.
+  values: []
+  source: https://menagesimple.com/nettoyage-de-vitres/
+  quote: Non, nous apportons le matériel de nettoyage des vitres.
+  status: verified
+
+- id: repassage_materiel
+  topic: prestations
+  statement: Pour le repassage, le client prévoit son fer et sa planche à repasser.
+  values: []
+  source: https://menagesimple.com/questions-frequentes-menage/
+  quote: Pour le repassage, prévoyez votre fer et votre planche à repasser.
+  status: verified
+
+- id: dechets_bio
+  topic: prestations
+  statement: MénageSimple ne traite pas les déchets biologiques (selles, cadavres d'animaux, infestations) ; le client doit le signaler avant.
+  values: []
+  source: https://menagesimple.com/conditions-generales/
+  quote: MénageSimple SA n’est pas autorisée à traiter des déchets de nature biologique
+  status: verified
+
+- id: recrutement_conditions
+  topic: recrutement
+  statement: >-
+    Pour travailler avec MénageSimple, il faut être basé(e) en Suisse avec un permis B, C ou G et un casier judiciaire
+    vierge ; la candidature se fait sur la page https://menagesimple.com/postuler/.
+  values: []
+  source: https://menagesimple.com/postuler/
+  quote: Basé(e) en Suisse avec un permis B, C ou G
+  status: verified
+
+- id: materiel_produits
+  topic: materiel
+  statement: >-
+    Qui fournit l'aspirateur, la serpillière et les produits pour le ménage régulier ? Les pages du site donnent
+    trois réponses différentes.
+  values: []
+  source: https://menagesimple.com/questions-frequentes-menage/
+  quote: "Les femmes de ménage disposent de leur propre matériel et de leurs produits de nettoyage : aspirateur, balai, serpillière etc."
+  status: contradictory
+  contradiction: C1
+
+- id: budget_guide
+  topic: prix
+  statement: Les budgets mensuels du guide (CHF 175, 440, 615) sont calculés sans la TVA.
+  values: ["175", "440", "615"]
+  source: https://menagesimple.com/menage-domicile-suisse-guide/
+  quote: "3 à 4 pièces (2h30 par semaine) : environ CHF 440/mois"
+  status: contradictory
+  contradiction: C2
+
+- id: renvoi_cgu_frais
+  topic: reservation
+  statement: Les CGU renvoient au point 10d pour les frais d'annulation, qui figurent en réalité au point 10c.
+  values: []
+  source: https://menagesimple.com/conditions-generales/
+  quote: Les annulations effectuées sous 48 heures sont soumises à des frais comme décrit au point 10d.
+  status: contradictory
+  contradiction: C5
