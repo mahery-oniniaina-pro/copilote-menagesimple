@@ -1,20 +1,14 @@
 import { analyzeMessage, type Language, type MessageContext } from "./extract";
-import { frame } from "./format";
+import { frame, holdingReply } from "./format";
 import { CONTACT_REASONS, INTENTS, type Intent, type Priority } from "./intents";
 import { loadKnowledge, type Contradiction, type Fact, type Knowledge } from "./knowledge";
 import { modelJsonSchema, modelOutputSchema, systemPrompt, userPrompt, type ModelOutput } from "./prompt";
 import { rulesOutput } from "./providers/rules";
 import type { Provider } from "./providers/types";
+import type { Status } from "./status";
 import { verify, type Check } from "./verify";
 
-export type Status = "pret" | "a_revoir" | "a_transmettre" | "a_classer";
-
-export const STATUS_LABELS: Record<Status, string> = {
-  pret: "Prêt à envoyer après relecture",
-  a_revoir: "À revoir",
-  a_transmettre: "À transmettre à l'équipe",
-  a_classer: "À classer, sans réponse",
-};
+export { STATUS_LABELS, type Status } from "./status";
 
 export type CopilotResult = {
   message: string;
@@ -76,7 +70,15 @@ export async function runCopilot(message: string, provider: Provider, knowledge 
   }
 
   output = { ...output, reponse: frame(output.reponse, output.langue) };
-  const verification = verify(message, context, output, knowledge, unknownFactIds);
+  let verification = verify(message, context, output, knowledge, unknownFactIds);
+  if (verification.holding) {
+    const draft = output.reponse;
+    output = { ...output, reponse: holdingReply(output.langue) };
+    verification = verify(message, context, output, knowledge, unknownFactIds);
+    if (draft !== output.reponse) {
+      verification.flags.push("Brouillon remplacé par une réponse d'attente : le modèle ne doit pas trancher un point contradictoire.");
+    }
+  }
   const status: Status =
     verification.route === "classer"
       ? "a_classer"

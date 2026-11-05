@@ -5,10 +5,12 @@ import type { Contradiction, Fact, Knowledge } from "./knowledge";
 import type { ModelOutput } from "./prompt";
 import { findForbiddenPromises } from "./promises";
 import { detectSensitive } from "./sensitive";
+import { normalize } from "./text";
 
 export type Check = { id: string; label: string; ok: boolean; detail?: string };
 
 export type Verification = {
+  holding: boolean;
   route: Route;
   priority: Priority;
   facts: Fact[];
@@ -18,6 +20,16 @@ export type Verification = {
 };
 
 const PRIORITY_RANK: Record<Priority, number> = { normale: 0, haute: 1, urgente: 2 };
+
+function openTopics(intent: keyof typeof INTENTS, message: string, context: MessageContext): string[] {
+  const topics: string[] = [];
+  if (intent === "materiel_produits" && /aspirateur|serpill|balai|produits?|matériel/i.test(message) && !/vitre|repass/i.test(message)) {
+    topics.push("C1");
+  }
+  if (intent === "duree_conseillee" && context.rooms && context.rooms >= 3 && context.rooms <= 4.5) topics.push("C3");
+  if (intent === "paiement_facturation" && /quand|débit|prélev|avant ou après|moment/i.test(message)) topics.push("C4");
+  return topics;
+}
 
 const RELATED_CONTRADICTIONS: Partial<Record<keyof typeof INTENTS, string[]>> = {
   litige_frais: ["C5"],
@@ -48,10 +60,11 @@ export function verify(
   const reply = output.reponse.trim();
   const flags: string[] = [];
 
+  const topics = openTopics(output.intention, message, context);
   let route: Route = policy.route;
   if (output.a_transmettre && route === "reponse") route = "humain";
   if (sensitive.length && route !== "humain") route = "humain";
-  if (open.length) route = "humain";
+  if (open.length || topics.length) route = "humain";
 
   let priority: Priority = policy.priority;
   for (const intent of sensitive) {
@@ -60,12 +73,13 @@ export function verify(
 
   const contradictionIds = new Set([
     ...open.map((f) => f.contradiction!),
+    ...topics,
     ...(RELATED_CONTRADICTIONS[output.intention] ?? []),
   ]);
   const contradictions = [...contradictionIds].map((id) => knowledge.contradiction(id)!).filter(Boolean);
 
-  for (const fact of open) {
-    flags.push(`Point non tranché sur le site (${fact.contradiction}) : la réponse attend une décision de l'équipe.`);
+  for (const id of new Set([...open.map((f) => f.contradiction!), ...topics])) {
+    flags.push(`Point non tranché sur le site (${id}) : la réponse attend une décision de l'équipe.`);
   }
   for (const intent of sensitive.filter((i) => i !== output.intention)) {
     flags.push(`Les règles détectent aussi : ${INTENTS[intent].label.toLowerCase()}.`);
@@ -85,21 +99,27 @@ export function verify(
   });
 
   const allowed = allowedNumbers(cited, context);
-  const unsupported = extractClaims(reply).filter((claim) => !allowed.some((v) => sameNumber(claim.value, v)));
+  const unsupported = [];
+  for (const claim of extractClaims(reply)) {
+    if (allowed.some((v) => sameNumber(claim.value, v))) continue;
+    const source = knowledge.facts.find(
+      (f) => f.status === "verified" && normalize(`${f.statement} ${f.quote}`).includes(normalize(claim.raw)),
+    );
+    if (source) {
+      if (!cited.includes(source)) {
+        cited.push(source);
+        verified.push(source);
+        flags.push(`Source ajoutée par le contrôle : ${source.id} (« ${claim.raw} »).`);
+      }
+      continue;
+    }
+    unsupported.push(claim);
+  }
   checks.push({
     id: "chiffres",
     label: "Chiffres vérifiés",
     ok: unsupported.length === 0,
-    detail: unsupported.length
-      ? unsupported
-          .map((claim) => {
-            const source = knowledge.facts.find(
-              (f) => f.status === "verified" && f.values.some((v) => sameNumber(claim.value, v)),
-            );
-            return source ? `« ${claim.raw} » : juste, mais le fait ${source.id} n'est pas cité` : `« ${claim.raw} » : aucune source`;
-          })
-          .join(" ; ")
-      : undefined,
+    detail: unsupported.length ? unsupported.map((claim) => `« ${claim.raw} » : aucune source`).join(" ; ") : undefined,
   });
 
   const promises = findForbiddenPromises(
@@ -119,6 +139,16 @@ export function verify(
       label: "Au moins un fait cité",
       ok: verified.length > 0,
       detail: verified.length ? undefined : "La réponse ne s'appuie sur aucun fait vérifié",
+    });
+  }
+
+  if (output.intention === "annuler_sauter" && route === "reponse") {
+    const complete = /\b48\b/.test(reply) && /\b90\s?%/.test(reply);
+    checks.push({
+      id: "regle_annulation",
+      label: "Règle d'annulation complète",
+      ok: complete,
+      detail: complete ? undefined : "La réponse doit rappeler les 48 heures et les 90 %",
     });
   }
 
@@ -152,5 +182,5 @@ export function verify(
     }
   }
 
-  return { route, priority, facts: cited, contradictions, checks, flags };
+  return { holding: open.length > 0 || topics.length > 0, route, priority, facts: cited, contradictions, checks, flags };
 }

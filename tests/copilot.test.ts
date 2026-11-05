@@ -56,6 +56,26 @@ describe("copilote", () => {
     expect(result.contradictions.map((c) => c.id)).toEqual(["C1"]);
   });
 
+  it("remplace le brouillon par une réponse d'attente sur un point non tranché, même sans citation", async () => {
+    const result = await runCopilot(
+      "Je dois fournir l'aspirateur ?",
+      fakeProvider({ ...base, intention: "materiel_produits", faits_utilises: [], reponse: "Oui, prévoyez votre aspirateur." }),
+    );
+    expect(result.status).toBe("a_transmettre");
+    expect(result.reply).toContain("Nous la vérifions avec l'équipe");
+    expect(result.reply).not.toContain("prévoyez");
+    expect(result.contradictions.map((c) => c.id)).toEqual(["C1"]);
+  });
+
+  it("transmet la durée conseillée pour un 4,5 pièces (contradiction C3)", async () => {
+    const result = await runCopilot(
+      "Il faut combien d'heures pour un 4,5 pièces ?",
+      fakeProvider({ ...base, intention: "duree_conseillee", faits_utilises: ["duree_minimale"], reponse: "Comptez au moins 2 heures." }),
+    );
+    expect(result.status).toBe("a_transmettre");
+    expect(result.contradictions.map((c) => c.id)).toEqual(["C3"]);
+  });
+
   it("transmet un dégât même si le modèle se trompe d'intention", async () => {
     const result = await runCopilot(
       "Votre intervenante a cassé mon vase.",
@@ -75,6 +95,30 @@ describe("copilote", () => {
     const result = await runCopilot("Nous sommes une agence SEO et pouvons doubler vos réservations.", rulesProvider());
     expect(result.status).toBe("a_classer");
     expect(result.reply).toBe("");
+  });
+
+  it("retrouve seul la source d'un chiffre écrit tel quel dans un fait vérifié", async () => {
+    const result = await runCopilot(
+      "Comment j'annule mon ménage ?",
+      fakeProvider({
+        ...base,
+        intention: "annuler_sauter",
+        faits_utilises: [],
+        reponse: "Cliquez sur « Sauter un ménage » : c'est sans frais jusqu'à 48 heures avant, ensuite 90 % sont facturés.",
+      }),
+    );
+    expect(result.status).toBe("pret");
+    expect(result.facts.map((f) => f.id)).toContain("annulation_48h");
+    expect(result.flags.some((f) => f.startsWith("Source ajoutée"))).toBe(true);
+  });
+
+  it("renvoie à la relecture une annulation qui oublie les 90 %", async () => {
+    const result = await runCopilot(
+      "Comment j'annule mon ménage ?",
+      fakeProvider({ ...base, intention: "annuler_sauter", faits_utilises: ["sauter_menage", "annulation_48h"], reponse: "Vous pouvez annuler jusqu'à 48 heures avant." }),
+    );
+    expect(result.status).toBe("a_revoir");
+    expect(result.checks.find((c) => c.id === "regle_annulation")?.ok).toBe(false);
   });
 
   it("signale un identifiant de fait inventé", async () => {

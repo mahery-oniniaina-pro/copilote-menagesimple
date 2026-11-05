@@ -8,7 +8,7 @@ const RULES: { intent: Intent; pattern: RegExp }[] = [
   },
   {
     intent: "degat",
-    pattern: /cass(é|ée|és|ées|e|er)(?![a-zàâäéèêëîïôöùûüç])|abîm\w*|endommag\w*|ray(é|ée|és|ées)(?![a-zàâäéèêëîïôöùûüç])|brisé\w*|dégât\w*|tach(é|ée|és|ées)(?![a-zàâäéèêëîïôöùûüç])|ne (marche|fonctionne) plus|broken|damaged|kaputt|beschädigt/i,
+    pattern: /cass(é|ée|és|ées|e|er)(?![a-zàâäéèêëîïôöùûüç])|abîm\w*|endommag\w*|ray(é|ée|és|ées)(?![a-zàâäéèêëîïôöùûüç])|brisé\w*|dégât\w*|tach(e|es|é|ée|és|ées)(?![a-zàâäéèêëîïôöùûüç])|ne (marche|fonctionne) plus|broken|damaged|kaputt|beschädigt/i,
   },
   {
     intent: "menace_juridique",
@@ -17,6 +17,14 @@ const RULES: { intent: Intent; pattern: RegExp }[] = [
   {
     intent: "litige_frais",
     pattern: /rembours\w*|abusi\w*|arnaque|escroqu\w*|injuste|contest\w*|factur\w*.{0,60}(alors que|pourtant|malgré)|refund|unfair|zurückerstatt\w*/i,
+  },
+  {
+    intent: "pas_de_disponibilite",
+    pattern: /disponibilit|aucun créneau|pas de créneau|rien de dispo|no (availability|slots?)|keine termine/i,
+  },
+  {
+    intent: "probleme_reservation",
+    pattern: /message d'erreur|erreur|impossible de (réserver|finaliser|payer)|tourne dans le vide|\bbug\b|paiement invalide|error|fehlermeldung/i,
   },
   {
     intent: "donnees_personnelles",

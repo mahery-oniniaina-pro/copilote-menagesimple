@@ -1,4 +1,6 @@
 import { monthlyCost, type Frequency, VISITS_PER_YEAR } from "./budget";
+import type { Intent } from "./intents";
+import { detectSensitive } from "./sensitive";
 
 export type Language = "fr" | "en" | "de" | "it";
 
@@ -154,16 +156,24 @@ function budgetFor(hours: number, frequency: Frequency, rate?: number): Budget {
   return { hours, frequency, visitsPerYear: VISITS_PER_YEAR[frequency], monthly: monthlyCost(hours, frequency, rate) };
 }
 
+export function extractRooms(text: string): number | undefined {
+  const match = text.match(/(\d(?:[.,]5)?)\s*(?:pièces|pieces|p\.|zimmer|rooms?)\b/i);
+  return match ? parseFloat(match[1].replace(",", ".")) : undefined;
+}
+
 export type MessageContext = {
   language: Language;
   hours?: number;
   frequency?: Frequency;
   budget?: Budget;
   budgetExample?: Budget;
+  rooms?: number;
   postalCode?: string;
   place?: { city: string; canton: Canton; cantonName: string; served: boolean };
   slot?: string;
   asksPrice: boolean;
+  cancellation: boolean;
+  situations: Intent[];
   injection: boolean;
   numbers: number[];
 };
@@ -185,6 +195,7 @@ export function analyzeMessage(message: string, rate?: number): MessageContext {
       asksPrice(message) && !(hours && frequency)
         ? budgetFor(hours ?? 2.5, frequency ?? "deux_semaines", rate)
         : undefined,
+    rooms: extractRooms(message),
     postalCode: extractPostalCode(message),
     place: place && {
       ...place,
@@ -193,6 +204,8 @@ export function analyzeMessage(message: string, rate?: number): MessageContext {
     },
     slot: extractSlot(message),
     asksPrice: asksPrice(message),
+    cancellation: /annul|sauter|skip|cancel|absag|stornier/i.test(message),
+    situations: detectSensitive(message),
     injection: looksLikeInjection(message),
     numbers: readNumbers(message),
   };

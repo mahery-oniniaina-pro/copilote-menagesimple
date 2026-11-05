@@ -40,6 +40,8 @@ describe("situations sensibles", () => {
     ["Je saisis mon avocat", "menace_juridique"],
     ["Je veux être remboursée", "litige_frais"],
     ["Merci de supprimer toutes mes données", "donnees_personnelles"],
+    ["Aucune disponibilité à Genève le samedi", "pas_de_disponibilite"],
+    ["Le formulaire affiche un message d'erreur", "probleme_reservation"],
   ])("« %s » passe à un humain (%s)", (message, intent) => {
     expect(detectSensitive(message)).toContain(intent);
   });

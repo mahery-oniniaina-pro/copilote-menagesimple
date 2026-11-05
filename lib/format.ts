@@ -16,6 +16,17 @@ const SIGN_OFFS: Record<Language, string> = {
 
 const GREETING = /^(bonjour|bonsoir|madame|monsieur|cher|chère|hello|hi\b|dear|good (morning|afternoon|evening)|guten (tag|morgen|abend)|hallo|sehr geehrte|liebe|buongiorno|buonasera|gentile)/i;
 
+const HOLDING: Record<Language, string> = {
+  fr: "Merci pour votre question. Nous la vérifions avec l'équipe et revenons vers vous rapidement.",
+  en: "Thank you for your question. We are checking it with the team and will get back to you shortly.",
+  de: "Vielen Dank für Ihre Frage. Wir klären sie mit dem Team und melden uns rasch bei Ihnen.",
+  it: "Grazie per la sua domanda. La verifichiamo con il team e le rispondiamo al più presto.",
+};
+
+export function holdingReply(language: Language): string {
+  return frame(HOLDING[language], language);
+}
+
 export function frame(reply: string, language: Language): string {
   let text = reply.trim();
   if (!text) return text;
