@@ -88,6 +88,10 @@ export async function runCopilot(message: string, provider: Provider, knowledge 
           ? "pret"
           : "a_revoir";
 
+  const handoffReason = verification.holding
+    ? `Le site se contredit sur ce point (${verification.contradictions.map((c) => c.id).join(", ")}) : l'équipe doit trancher avant de répondre.`
+    : output.raison_transmission || (verification.route === "humain" ? `${INTENTS[output.intention].label} : la décision revient à l'équipe.` : "");
+
   return {
     message,
     provider: { id: provider.id, label: provider.label },
@@ -97,7 +101,7 @@ export async function runCopilot(message: string, provider: Provider, knowledge 
     status,
     priority: verification.priority,
     summary: output.resume,
-    handoffReason: output.raison_transmission,
+    handoffReason,
     reply: output.reponse.trim(),
     language: context.language,
     facts: verification.facts,

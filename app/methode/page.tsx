@@ -44,7 +44,7 @@ export default function Methode() {
 
         <section className="max-w-[62ch]">
           <h2 className="text-[18px] font-semibold tracking-[-0.01em]">Mise en service proposée</h2>
-          <ol className="mt-3 list-decimal space-y-3 pl-5 text-[15px] leading-relaxed text-ink-700 marker:font-code marker:text-[12px] marker:text-ink-400">
+          <ol className="mt-3 list-decimal space-y-3 pl-5 text-[15px] leading-relaxed text-ink-700 marker:font-code marker:text-[12px] marker:text-ink-500">
             <li>Trancher les cinq errata et corriger le site : une ligne à changer dans la fiche de faits pour chacun.</li>
             <li>Deux semaines en observation dans l&apos;outil de support : le copilote propose, l&apos;équipe envoie, on mesure la part d&apos;épreuves signées sans retouche.</li>
             <li>Automatiser seulement les questions d&apos;information qui passent ce cap ; les incidents restent humains.</li>

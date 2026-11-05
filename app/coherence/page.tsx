@@ -32,7 +32,7 @@ export default function Coherence() {
                 Errata {c.id}
               </span>
               <h2 className="text-[16px] font-semibold text-ink-900">{c.title}</h2>
-              <span className="stamp ml-auto text-[10.5px] text-errata">{c.decision ?? "Décision de l'équipe attendue"}</span>
+              <span className="ml-auto text-[12.5px] font-medium text-errata">{c.decision ?? "Décision de l'équipe attendue"}</span>
             </div>
 
             <div className={`grid gap-px bg-ink-100 ${c.sources.length > 2 ? "md:grid-cols-3" : "md:grid-cols-2"}`}>

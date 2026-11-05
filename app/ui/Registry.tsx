@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { DECISION_UI, STATUS_UI, TONE_BADGE } from "./status";
+import { DECISION_UI, STATUS_UI, TONE_MARK } from "./status";
 import type { Entry } from "./Workspace";
 
 export function Registry({
@@ -16,7 +16,12 @@ export function Registry({
   const selectedRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    selectedRef.current?.scrollIntoView({ block: "nearest" });
+    const row = selectedRef.current;
+    const box = row?.closest("section");
+    if (!row || !box || box.scrollHeight <= box.clientHeight) return;
+    const top = row.offsetTop - box.offsetTop;
+    if (top < box.scrollTop) box.scrollTop = top - 8;
+    else if (top + row.offsetHeight > box.scrollTop + box.clientHeight) box.scrollTop = top + row.offsetHeight - box.clientHeight + 8;
   }, [selectedId]);
 
   if (!entries.length) {
@@ -25,7 +30,7 @@ export function Registry({
 
   return (
     <>
-      <ol className="divide-y divide-ink-100 px-2 py-2">
+      <ol className="ruled divide-y divide-ink-150/70 px-2 py-2">
         {entries.map((entry) => {
           const selected = entry.id === selectedId;
           const status = entry.decision ? DECISION_UI[entry.decision] : { short: STATUS_UI[entry.result.status].short, tone: STATUS_UI[entry.result.status].tone };
@@ -37,7 +42,7 @@ export function Registry({
                 onClick={() => onSelect(entry.id)}
                 aria-current={selected ? "true" : undefined}
                 className={`w-full rounded-lg border px-3 py-2.5 text-left transition-[background-color,border-color] duration-150 ${
-                  selected ? "border-ink-900 bg-sheet" : "border-transparent hover:bg-sheet/70"
+                  selected ? "border-ink-900 bg-sheet shadow-[0_6px_18px_-12px_rgb(20_22_19/0.35)]" : "border-transparent hover:bg-sheet/60"
                 } ${entry.decision ? "opacity-75" : ""}`}
               >
                 <div className="flex items-center gap-2 font-code text-[11px] text-ink-500">
@@ -54,16 +59,20 @@ export function Registry({
                   {entry.result.summary || entry.result.intentLabel}
                 </p>
                 <p className="mt-0.5 line-clamp-2 text-[13px] leading-snug text-ink-500">{entry.message}</p>
-                <div className="mt-2 flex items-center gap-2">
-                  <span className={`rounded-sm border px-1.5 py-px text-[11.5px] font-medium ${TONE_BADGE[status.tone]}`}>{status.short}</span>
-                  <span className="truncate text-[11.5px] text-ink-400">{entry.group}</span>
+                <div className="mt-2 flex items-center gap-2 text-[12px]">
+                  <span className="inline-flex items-center gap-1.5 font-medium text-ink-700">
+                    <span aria-hidden className={`size-2 rounded-[2px] ${TONE_MARK[status.tone]}`} />
+                    {status.short}
+                  </span>
+                  <span aria-hidden className="text-ink-300">·</span>
+                  <span className="truncate text-ink-500">{entry.group}</span>
                 </div>
               </button>
             </li>
           );
         })}
       </ol>
-      <p className="hidden border-t border-ink-100 px-5 py-3 font-code text-[10.5px] text-ink-400 md:block">
+      <p className="hidden border-t border-ink-100 px-5 py-3 font-code text-[10.5px] text-ink-500 md:block">
         J K pour naviguer · S signer · T transmettre · N nouveau message
       </p>
     </>

@@ -7,6 +7,7 @@ import type { Sample } from "@/lib/samples";
 import type { Status } from "@/lib/status";
 import { Composer } from "./Composer";
 import { Margin } from "./Margin";
+import { annotateEntry } from "./notes";
 import { Pli } from "./Pli";
 import { Registry } from "./Registry";
 import { STATUS_UI, type Decision } from "./status";
@@ -36,7 +37,10 @@ function nowTime() {
 export function Workspace({ samples }: { samples: Sample[] }) {
   const [entries, setEntries] = useState<Entry[]>(() => sortEntries(samples));
   const [filter, setFilter] = useState<Filter>("tous");
-  const [selectedId, setSelectedId] = useState(entries[0]?.id);
+  const [selectedId, setSelectedId] = useState(
+    () => (entries.find((e) => e.result.status === "pret" && annotateEntry(e).notes.length > 0) ?? entries[0])?.id,
+  );
+  const [activeNote, setActiveNote] = useState<number>();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [composing, setComposing] = useState(false);
   const [welcome, setWelcome] = useState(false);
@@ -92,6 +96,7 @@ export function Workspace({ samples }: { samples: Sample[] }) {
 
   const select = useCallback((id: string) => {
     setSelectedId(id);
+    setActiveNote(undefined);
     setMobileOpen(true);
     if (window.matchMedia("(max-width: 767px)").matches) window.scrollTo({ top: 0 });
   }, []);
@@ -149,43 +154,52 @@ export function Workspace({ samples }: { samples: Sample[] }) {
 
   return (
     <div className="flex min-h-0 flex-1 flex-col md:h-dvh">
-      <header className="flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-ink-150 bg-sheet px-4 py-3 md:px-6">
-        <div className="min-w-0">
+      <header className="flex flex-wrap items-center gap-x-6 gap-y-2.5 border-b border-ink-150 bg-ground px-4 py-3 md:px-6">
+        <div className={`min-w-0 ${mobileOpen ? "hidden md:block" : ""}`}>
           <h1 className="text-[17px] font-semibold tracking-[-0.01em]">Registre des plis</h1>
           <p className="text-[12px] text-ink-500">Service client MénageSimple · prototype non affilié, messages inventés</p>
         </div>
-        <div role="toolbar" aria-label="Filtrer par statut" className="flex flex-wrap gap-1.5 md:ml-4">
+        <div
+          role="toolbar"
+          aria-label="Filtrer par statut"
+          className={`-mx-4 flex-nowrap gap-1.5 overflow-x-auto px-4 md:mx-0 md:ml-4 md:flex md:flex-wrap md:overflow-visible md:px-0 ${
+            mobileOpen ? "hidden" : "order-last flex w-[calc(100%+2rem)] md:order-none md:w-auto"
+          }`}
+        >
           {FILTERS.map((f) => (
             <button
               key={f}
               type="button"
               onClick={() => setFilter(f)}
               aria-pressed={filter === f}
-              className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[12.5px] transition-colors ${
+              className={`flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-[12.5px] transition-colors ${
                 filter === f
                   ? "border-ink-900 bg-ink-900 text-sheet"
-                  : "border-ink-150 bg-sheet text-ink-600 hover:border-ink-300 hover:text-ink-900"
+                  : "border-ink-200 bg-sheet/70 text-ink-600 hover:border-ink-300 hover:text-ink-900"
               }`}
             >
               {f === "tous" ? "Tous" : STATUS_UI[f].short}
-              <span className={`tabular font-code text-[11px] ${filter === f ? "text-ink-200" : "text-ink-400"}`}>{counts[f]}</span>
+              <span className={`tabular font-code text-[11px] ${filter === f ? "text-ink-200" : "text-ink-500"}`}>{counts[f]}</span>
             </button>
           ))}
         </div>
         <button
           type="button"
           onClick={() => setComposing(true)}
-          className="ml-auto flex items-center gap-2 rounded-md border-[1.5px] border-ink-900 bg-sheet px-3 py-1.5 text-[13px] font-medium transition-colors hover:bg-ink-50"
+          aria-label="Essayer un message"
+          className={`ml-auto items-center gap-2 rounded-md border-[1.5px] border-ink-900 bg-sheet px-2.5 py-1.5 text-[13px] font-medium transition-colors hover:bg-ink-50 sm:px-3 ${
+            mobileOpen ? "hidden md:flex" : "flex"
+          }`}
         >
           <PenLine aria-hidden className="size-4" strokeWidth={1.8} />
-          Essayer un message
-          <kbd className="hidden font-code text-[10.5px] text-ink-400 lg:inline">N</kbd>
+          <span className="hidden sm:inline">Essayer un message</span>
+          <kbd className="hidden font-code text-[10.5px] text-ink-500 lg:inline">N</kbd>
         </button>
       </header>
 
       {welcome && (
-        <div className={`items-start gap-4 border-b border-ink-150 bg-signal-soft px-4 py-3 text-[13.5px] md:flex md:px-6 ${mobileOpen ? "hidden" : "flex"}`}>
-          <p className="max-w-[92ch] text-signal-ink">
+        <div className={`items-start gap-4 border-b border-ink-150 bg-ink-50 px-4 py-3 text-[13.5px] md:flex md:px-6 ${mobileOpen ? "hidden" : "flex"}`}>
+          <p className="max-w-[92ch] text-ink-700">
             <span className="font-semibold text-ink-900">Ce que vous regardez :</span> la boîte d&apos;une équipe de service
             client. Pour chaque message, le copilote a lu, rédigé une épreuve et vérifié chaque chiffre contre le site de
             MénageSimple. Ouvrez un pli, lisez l&apos;épreuve annotée au crayon bleu, puis signez ou transmettez : rien ne
@@ -195,7 +209,7 @@ export function Workspace({ samples }: { samples: Sample[] }) {
             type="button"
             onClick={closeWelcome}
             aria-label="Fermer la présentation"
-            className="ml-auto rounded p-1 text-signal-ink hover:bg-signal/40"
+            className="ml-auto rounded p-1 text-ink-600 hover:bg-ink-100"
           >
             <X aria-hidden className="size-4" />
           </button>
@@ -226,13 +240,15 @@ export function Workspace({ samples }: { samples: Sample[] }) {
               </button>
               <Pli
                 entry={selected}
+                activeNote={activeNote}
+                onNote={setActiveNote}
                 onDraftChange={(draft) => update(selected.id, { draft })}
                 onSign={() => void sign(selected)}
                 onHandOff={() => handOff(selected)}
                 onUndo={() => update(selected.id, { decision: undefined })}
               />
               <div className="mt-8 xl:hidden">
-                <Margin entry={selected} />
+                <Margin entry={selected} activeNote={activeNote} onNote={setActiveNote} />
               </div>
             </div>
           ) : (
@@ -240,8 +256,8 @@ export function Workspace({ samples }: { samples: Sample[] }) {
           )}
         </section>
 
-        <aside aria-label="Marge de vérification" className="hidden min-h-0 overflow-y-auto border-l border-ink-150 bg-sheet xl:block">
-          {selected && <Margin key={selected.id} entry={selected} />}
+        <aside aria-label="Marge de vérification" className="hidden min-h-0 overflow-y-auto border-l border-ink-150 bg-ground xl:block">
+          {selected && <Margin key={selected.id} entry={selected} activeNote={activeNote} onNote={setActiveNote} />}
         </aside>
       </div>
 

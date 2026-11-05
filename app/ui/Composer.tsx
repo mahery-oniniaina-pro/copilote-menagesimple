@@ -68,7 +68,7 @@ export function Composer({ onResult, onCancel }: { onResult: (result: CopilotRes
         maxLength={1500}
         rows={4}
         placeholder="Bonjour, la femme de ménage n'est pas venue ce matin…"
-        className="mt-2 w-full resize-y rounded-md border border-ink-200 bg-ground/60 px-3 py-2 text-[14px] leading-relaxed outline-none placeholder:text-ink-400 focus:border-pencil"
+        className="mt-2 w-full resize-y rounded-md border border-ink-200 bg-ground/60 px-3 py-2 text-[14px] leading-relaxed outline-none placeholder:text-ink-500 focus:border-pencil"
       />
       {error && <p className="mt-1.5 text-[12.5px] text-errata">{error}</p>}
       <div className="mt-2 flex items-center gap-2">
@@ -82,7 +82,7 @@ export function Composer({ onResult, onCancel }: { onResult: (result: CopilotRes
         <button type="button" onClick={onCancel} className="rounded-md px-2.5 py-1.5 text-[13px] text-ink-600 hover:bg-ink-50">
           Annuler
         </button>
-        <kbd className="ml-auto hidden font-code text-[10.5px] text-ink-400 sm:inline">⌘ Entrée</kbd>
+        <kbd className="ml-auto hidden font-code text-[10.5px] text-ink-500 sm:inline">⌘ Entrée</kbd>
       </div>
     </form>
   );

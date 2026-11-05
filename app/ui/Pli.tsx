@@ -19,6 +19,42 @@ function seconds(ms: number) {
   return `${(ms / 1000).toFixed(1).replace(".", ",")} s`;
 }
 
+function barcode(code: string) {
+  let seed = [...code].reduce((acc, ch) => (acc * 31 + ch.charCodeAt(0)) >>> 0, 7);
+  const bars: { x: number; w: number }[] = [];
+  let x = 0;
+  for (let i = 0; i < 30; i++) {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    const w = 1 + (seed % 3);
+    if (i % 2 === 0) bars.push({ x, w });
+    x += w + (i % 2 === 0 ? 0 : 1);
+  }
+  return { bars, width: x };
+}
+
+function TrackingLabel({ code, time }: { code: string; time: string }) {
+  const { bars, width } = useMemo(() => barcode(code), [code]);
+  return (
+    <div className="inline-flex items-stretch overflow-hidden rounded-[3px] border-[1.5px] border-ink-900 bg-sheet">
+      <span className="flex items-center bg-ink-900 px-2 font-code text-[11px] tracking-[0.08em] text-sheet">RR</span>
+      <span className="flex flex-col justify-center px-2.5 py-1">
+        <svg aria-hidden width={width} height="16" viewBox={`0 0 ${width} 16`} className="block">
+          {bars.map((bar) => (
+            <rect key={bar.x} x={bar.x} y="0" width={bar.w} height="16" fill="currentColor" />
+          ))}
+        </svg>
+        <span className="tabular mt-0.5 font-code text-[10.5px] leading-none tracking-[0.06em]">
+          {code.replace("RR·", "")} · {time}
+        </span>
+      </span>
+    </div>
+  );
+}
+
+function Dot({ human }: { human?: boolean }) {
+  return <span aria-hidden className={`block size-2.5 shrink-0 rounded-full border-[1.5px] border-ink-900 ${human ? "bg-signal" : "bg-ink-900"}`} />;
+}
+
 function Tracking({ entry }: { entry: Entry }) {
   const { result } = entry;
   const passed = result.checks.filter((c) => c.ok).length;
@@ -33,41 +69,66 @@ function Tracking({ entry }: { entry: Entry }) {
     { label: "Lu sans IA", detail: LANGUAGES[result.language] ?? result.language, grow: 1, state: "done" as const },
     {
       label: "Rédigé",
-      detail: result.durationMs ? `${providerShort(result)} · ${seconds(result.durationMs)}` : providerShort(result),
+      detail: result.durationMs ? `${providerShort(result)}, ${seconds(result.durationMs)}` : providerShort(result),
       grow: 1 + Math.min(result.durationMs / 2500, 5),
       state: "done" as const,
     },
-    { label: "Contrôlé", detail: `${passed} sur ${result.checks.length}`, grow: 1, state: "done" as const },
+    { label: "Contrôlé", detail: `${passed} contrôles sur ${result.checks.length}`, grow: 1, state: "done" as const },
     { ...final, grow: 1 },
   ];
 
   return (
-    <ol aria-label="Suivi du pli" className="flex min-w-[540px] items-start">
+    <>
+    <ol aria-label="Suivi du pli" className="hidden items-start sm:flex">
       {steps.map((step, index) => (
         <li
           key={step.label}
-          className={`flex flex-col ${index === steps.length - 1 ? "shrink-0 items-end text-right" : "min-w-[76px] sm:min-w-[92px]"}`}
+          className={`flex flex-col ${index === steps.length - 1 ? "shrink-0 items-end text-right" : "min-w-[92px]"}`}
           style={index === steps.length - 1 ? undefined : { flexGrow: step.grow, flexBasis: 0 }}
         >
           <div className="flex w-full items-center">
             {index === steps.length - 1 && <span aria-hidden className="h-[1.5px] flex-1 bg-ink-900" />}
-            <span
-              aria-hidden
-              className={`size-2.5 shrink-0 rounded-full border-[1.5px] border-ink-900 ${
-                step.state === "human" ? "bg-signal" : "bg-ink-900"
-              }`}
-            />
+            <Dot human={step.state === "human"} />
             {index < steps.length - 1 && <span aria-hidden className="h-[1.5px] flex-1 bg-ink-900" />}
           </div>
-          <span className={`mt-1.5 text-[12px] font-medium whitespace-nowrap ${index === steps.length - 1 ? "" : "pr-2"}`}>{step.label}</span>
-          <span className={`font-code text-[10.5px] text-ink-500 ${index === steps.length - 1 ? "whitespace-nowrap" : "truncate pr-2"}`}>{step.detail}</span>
+          <span className={`mt-1.5 text-[12.5px] font-medium whitespace-nowrap ${index === steps.length - 1 ? "" : "pr-2"}`}>{step.label}</span>
+          <span className={`text-[11.5px] text-ink-500 ${index === steps.length - 1 ? "whitespace-nowrap" : "truncate pr-2"}`}>{step.detail}</span>
         </li>
       ))}
     </ol>
+    <ol aria-label="Suivi du pli" className="sm:hidden">
+      {steps.map((step, index) => (
+        <li key={step.label} className="grid grid-cols-[10px_1fr] gap-x-3">
+          <div className="flex flex-col items-center">
+            <span className="mt-[5px]">
+              <Dot human={step.state === "human"} />
+            </span>
+            {index < steps.length - 1 && <span aria-hidden className="w-[1.5px] flex-1 bg-ink-900" />}
+          </div>
+          <p className="pb-2.5 text-[13px] leading-snug">
+            <span className="font-medium">{step.label}</span>
+            <span className="ml-2 text-ink-500">{step.detail}</span>
+          </p>
+        </li>
+      ))}
+    </ol>
+    </>
   );
 }
 
-function Proof({ entry, editing, onChange }: { entry: Entry; editing: boolean; onChange: (draft: string) => void }) {
+function Proof({
+  entry,
+  editing,
+  activeNote,
+  onNote,
+  onChange,
+}: {
+  entry: Entry;
+  editing: boolean;
+  activeNote?: number;
+  onNote: (note?: number) => void;
+  onChange: (draft: string) => void;
+}) {
   const { segments } = useMemo(() => annotateEntry(entry), [entry]);
 
   if (editing) {
@@ -83,13 +144,23 @@ function Proof({ entry, editing, onChange }: { entry: Entry; editing: boolean; o
   }
 
   return (
-    <div className="font-proof text-[16.5px] leading-[1.75] whitespace-pre-wrap text-ink-900">
+    <div className="font-proof text-[16.5px] leading-[1.8] whitespace-pre-wrap text-ink-900">
       {segments.map((segment, index) =>
         segment.note ? (
-          <span key={index} className="pencil-mark">
+          <button
+            key={index}
+            type="button"
+            onMouseEnter={() => onNote(segment.note)}
+            onMouseLeave={() => onNote(undefined)}
+            onFocus={() => onNote(segment.note)}
+            onBlur={() => onNote(undefined)}
+            onClick={() => document.getElementById(`note-${segment.note}`)?.scrollIntoView({ block: "nearest", behavior: "smooth" })}
+            aria-label={`${segment.text}, source ${segment.note}`}
+            className={`pencil-mark cursor-help rounded-[2px] transition-colors ${activeNote === segment.note ? "bg-pencil-soft" : ""}`}
+          >
             {segment.text}
             <sup className="ml-0.5 font-code text-[10px] font-medium text-pencil">{segment.note}</sup>
-          </span>
+          </button>
         ) : (
           <span key={index}>{segment.text}</span>
         ),
@@ -100,12 +171,16 @@ function Proof({ entry, editing, onChange }: { entry: Entry; editing: boolean; o
 
 export function Pli({
   entry,
+  activeNote,
+  onNote,
   onDraftChange,
   onSign,
   onHandOff,
   onUndo,
 }: {
   entry: Entry;
+  activeNote?: number;
+  onNote: (note?: number) => void;
   onDraftChange: (draft: string) => void;
   onSign: () => void;
   onHandOff: () => void;
@@ -137,7 +212,7 @@ export function Pli({
     >
       <Signature aria-hidden className="size-4" strokeWidth={1.8} />
       Signer et copier
-      <kbd className="font-code text-[10.5px] opacity-60">S</kbd>
+      <kbd className="hidden font-code text-[10.5px] opacity-60 lg:inline">S</kbd>
     </button>
   );
   const handOffButton = (
@@ -150,24 +225,23 @@ export function Pli({
     >
       <Hand aria-hidden className="size-4" strokeWidth={1.8} />
       Transmettre à l&apos;équipe
-      <kbd className="font-code text-[10.5px] opacity-60">T</kbd>
+      <kbd className="hidden font-code text-[10.5px] opacity-60 lg:inline">T</kbd>
     </button>
   );
 
   return (
     <article>
       <header className="mb-5">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-code text-[11.5px] text-ink-500">
-          <span className="text-ink-900">{entry.code}</span>
-          <span>reçu à {entry.time}</span>
-          <span>motif « {result.reason} »</span>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <TrackingLabel code={entry.code} time={entry.time} />
+          <p className="text-[12.5px] leading-snug text-ink-500">Motif du formulaire : « {result.reason} »</p>
         </div>
-        <h2 className="mt-2 text-[22px] leading-tight font-semibold tracking-[-0.015em] text-balance">
+        <h2 className="mt-3 text-[22px] leading-tight font-semibold tracking-[-0.015em] text-balance">
           {result.summary || result.intentLabel}
         </h2>
         <div className="mt-2.5 flex flex-wrap items-center gap-2">
           <span className={`rounded-sm border px-1.5 py-px text-[12px] font-medium ${TONE_BADGE[status.tone]}`}>{status.long}</span>
-          <span className="rounded-sm border border-ink-150 bg-sheet px-1.5 py-px text-[12px] text-ink-600">{result.intentLabel}</span>
+          <span className="rounded-sm border border-ink-200 bg-sheet/70 px-1.5 py-px text-[12px] text-ink-600">{result.intentLabel}</span>
           {result.priority !== "normale" && (
             <span className="stamp rounded-sm bg-ink-900 px-1.5 py-0.5 text-[10px] text-sheet">
               {result.priority === "urgente" ? "Urgent" : "Prioritaire"}
@@ -176,12 +250,17 @@ export function Pli({
         </div>
       </header>
 
-      <div className="mb-6 overflow-x-auto rounded-lg border border-ink-150 bg-sheet px-4 pt-3.5 pb-4">
+      <div className="mb-6 rounded-lg border border-ink-200 px-4 pt-3.5 pb-3 sm:pb-4">
         <Tracking entry={entry} />
       </div>
 
       <section aria-label="Message du client" className="mb-6">
-        <h3 className="mb-2 text-[12.5px] font-medium text-ink-500">Message reçu</h3>
+        <div className="mb-2 flex items-center gap-3">
+          <h3 className="text-[12.5px] font-medium text-ink-500">Message reçu</h3>
+          <span className="stamp -rotate-2 rounded-full border border-ink-500 px-2 py-px text-[9.5px] text-ink-600">
+            Reçu 05.11.26 · {entry.time}
+          </span>
+        </div>
         <p className="text-[15.5px] leading-relaxed text-ink-900">{entry.message}</p>
         {result.status === "a_transmettre" && result.handoffReason && (
           <p className="mt-3 text-[13.5px] text-ink-600">
@@ -203,7 +282,7 @@ export function Pli({
         <section aria-label="Épreuve de la réponse" className="perforated relative rounded-b-lg border border-ink-150 bg-sheet shadow-[0_1px_0_rgb(20_22_19/0.04),0_12px_32px_-18px_rgb(20_22_19/0.25)]">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-ink-100 px-5 pt-5 pb-3">
             <h3 className="text-[13px] font-semibold">Épreuve de la réponse</h3>
-            <span className="font-code text-[11px] text-ink-500">{providerShort(result)} · à relire</span>
+            <span className="text-[12px] text-ink-500">{providerShort(result)} · à relire</span>
             <button
               type="button"
               onClick={() => setEditing((v) => !v)}
@@ -215,12 +294,12 @@ export function Pli({
           </div>
 
           <div className="relative px-5 py-5 md:px-7 md:py-6">
-            <Proof entry={entry} editing={editing} onChange={onDraftChange} />
+            <Proof entry={entry} editing={editing} activeNote={activeNote} onNote={onNote} onChange={onDraftChange} />
             {entry.decision && (
               <div
                 aria-hidden
                 className={`animate-stamp pointer-events-none absolute top-4 right-5 rounded-md border-2 px-3 py-1.5 text-center ${
-                  entry.decision === "signe" ? "border-ok text-ok" : "border-ink-900 bg-signal/90 text-ink-900"
+                  entry.decision === "signe" ? "border-ok bg-sheet/80 text-ok" : "border-ink-900 bg-signal/90 text-ink-900"
                 }`}
               >
                 <span className="stamp block text-[12px] font-semibold">{entry.decision === "signe" ? "Signé" : "Transmis"}</span>
@@ -229,7 +308,7 @@ export function Pli({
             )}
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 border-t border-ink-100 px-5 py-3.5">
+          <div className="z-10 flex flex-wrap items-center gap-2 rounded-b-lg border-t border-ink-100 bg-sheet px-5 py-3.5 md:sticky md:bottom-0">
             {entry.decision ? (
               <>
                 <p className="text-[13px] text-ink-600">

@@ -71,37 +71,28 @@ export default function BancEssai() {
         </p>
       </header>
 
-      <div className="mt-7 grid gap-px overflow-hidden rounded-lg border border-ink-150 bg-ink-150 sm:grid-cols-3">
-        <div className="bg-sheet px-5 py-4">
-          <p className="tabular font-code text-[26px] leading-none">
-            {control.passed}/{control.total}
-            {rules && <span className="ml-2 text-[14px] text-ink-400">contre {rules.metrics.controle.passed}/{rules.metrics.controle.total} sans IA</span>}
-          </p>
-          <p className="mt-2 text-[13px] text-ink-600">messages de contrôle réussis par {main.label.split(" via ")[0]}</p>
-        </div>
-        <div className="bg-sheet px-5 py-4">
-          <p className="tabular font-code text-[26px] leading-none">
-            {readySensitive(main)}/{control.sensitive + main.metrics.base.sensitive}
-            {rules && <span className="ml-2 text-[14px] text-ink-400">contre {readySensitive(rules)} sans IA</span>}
-          </p>
-          <p className="mt-2 text-[13px] text-ink-600">cas sensibles sortis « prêts à signer » : argent, dégât, absence, données</p>
-        </div>
-        <div className="bg-sheet px-5 py-4">
-          <p className="tabular font-code text-[26px] leading-none">0 CHF</p>
-          <p className="mt-2 text-[13px] text-ink-600">modèle local : aucun message client ne sort de la machine</p>
-        </div>
-      </div>
+      <p className="mt-6 max-w-[74ch] rounded-lg border border-ink-200 bg-sheet px-5 py-4 text-[15.5px] leading-relaxed">
+        Sur les 20 messages jamais vus, <span className="font-semibold">{main.label.split(" via ")[0]} en réussit{" "}
+        <span className="tabular">{control.passed}</span></span>
+        {rules && <>, la version sans IA <span className="tabular">{rules.metrics.controle.passed}</span></>}. Sur les{" "}
+        <span className="tabular">{control.sensitive + main.metrics.base.sensitive}</span> cas sensibles (argent, dégât, absence,
+        données), <span className="font-semibold">{readySensitive(main) === 0 ? "aucun" : readySensitive(main)} n&apos;est sorti prêt à signer</span>
+        {rules && <>, contre <span className="tabular">{readySensitive(rules)}</span> sans IA</>}. Coût : 0 CHF, le modèle tourne en
+        local et aucun message ne sort de la machine.
+      </p>
 
       <div className="mt-8 space-y-5">
         <Planche
           title="Jeu de contrôle"
           note="Cliquez une case pour lire le message et l'épreuve. Barrée : ratée. Point noir : cas sensible, qui doit revenir à l'équipe."
           cases={main.cases.filter((c) => c.set === "controle")}
+          columns="grid-cols-5 sm:grid-cols-10"
         />
         <Planche
           title="Jeu de base"
           note="Écrit à partir des six motifs du formulaire de contact et des thèmes des avis publics."
           cases={main.cases.filter((c) => c.set === "base")}
+          columns="grid-cols-5 sm:grid-cols-10 xl:grid-cols-20"
         />
       </div>
 

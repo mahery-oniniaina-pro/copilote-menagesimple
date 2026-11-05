@@ -2,14 +2,14 @@
 
 @theme {
   --color-sheet: #ffffff;
-  --color-ground: #f4f5f2;
-  --color-ink-50: #eff0ec;
-  --color-ink-100: #e7e8e3;
-  --color-ink-150: #dcded8;
+  --color-ground: #e9ede4;
+  --color-ink-50: #f1f3ee;
+  --color-ink-100: #dfe3d9;
+  --color-ink-150: #d3d8cc;
   --color-ink-200: #cdd0c9;
   --color-ink-300: #b0b3ac;
-  --color-ink-400: #8b8e88;
-  --color-ink-500: #6a6d67;
+  --color-ink-400: #7c8077;
+  --color-ink-500: #5d6159;
   --color-ink-600: #50534d;
   --color-ink-700: #383a36;
   --color-ink-900: #141613;
@@ -93,9 +93,9 @@
     background-image: repeating-linear-gradient(
       to bottom,
       transparent 0,
-      transparent 27px,
-      var(--color-ink-100) 27px,
-      var(--color-ink-100) 28px
+      transparent 31px,
+      rgb(20 22 19 / 0.07) 31px,
+      rgb(20 22 19 / 0.07) 32px
     );
   }
 

@@ -10,7 +10,7 @@ function isSensitive(c: CaseResult) {
   return c.expected.status.length === 1 && c.expected.status[0] === "a_transmettre";
 }
 
-export function Planche({ title, note, cases }: { title: string; note: string; cases: CaseResult[] }) {
+export function Planche({ title, note, cases, columns }: { title: string; note: string; cases: CaseResult[]; columns: string }) {
   const [openId, setOpenId] = useState<string>();
   const open = cases.find((c) => c.id === openId);
   const passed = cases.filter((c) => c.score.pass).length;
@@ -25,7 +25,7 @@ export function Planche({ title, note, cases }: { title: string; note: string; c
         <p className="w-full text-[12.5px] text-ink-500">{note}</p>
       </header>
 
-      <ol className="grid grid-cols-[repeat(auto-fill,minmax(58px,1fr))] border-l border-ink-100">
+      <ol className={`grid border-l border-ink-100 ${columns}`}>
         {cases.map((c) => {
           const active = c.id === openId;
           return (

@@ -20,3 +20,10 @@ export const TONE_BADGE: Record<string, string> = {
   ok: "bg-ok-soft text-ok border-ok/30",
   ink: "bg-ink-50 text-ink-600 border-ink-200",
 };
+
+export const TONE_MARK: Record<string, string> = {
+  signal: "bg-signal ring-1 ring-ink-900",
+  errata: "bg-errata",
+  ok: "bg-ok",
+  ink: "bg-ink-300",
+};

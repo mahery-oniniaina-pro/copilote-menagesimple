@@ -24,7 +24,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-export function Margin({ entry }: { entry: Entry }) {
+export function Margin({ entry, activeNote, onNote }: { entry: Entry; activeNote?: number; onNote: (note?: number) => void }) {
   const { result } = entry;
   const { notes } = useMemo(() => annotateEntry(entry), [entry]);
   const numbered = new Set(notes.map((n) => n.fact.id));
@@ -67,9 +67,17 @@ export function Margin({ entry }: { entry: Entry }) {
 
       {(notes.length > 0 || otherFacts.length > 0) && (
         <Section title="Sources en marge">
-          <ol className="space-y-4">
+          <ol className="space-y-2.5">
             {notes.map(({ number, fact }) => (
-              <li key={fact.id} className="grid grid-cols-[18px_1fr] gap-2 text-[13px] leading-snug">
+              <li
+                key={fact.id}
+                id={`note-${number}`}
+                onMouseEnter={() => onNote(number)}
+                onMouseLeave={() => onNote(undefined)}
+                className={`-mx-2 grid scroll-mt-4 grid-cols-[18px_1fr] gap-2 rounded-md px-2 py-1.5 text-[13px] leading-snug transition-colors ${
+                  activeNote === number ? "bg-pencil-soft" : ""
+                }`}
+              >
                 <span className="font-code text-[11px] font-medium text-pencil">{number}</span>
                 <div>
                   <p>{fact.statement}</p>

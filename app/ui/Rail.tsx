@@ -37,7 +37,7 @@ export function Rail() {
             }`}
           >
             <Icon aria-hidden className="size-[19px]" strokeWidth={active ? 2 : 1.6} />
-            <span className={active ? "font-medium" : ""}>{label}</span>
+            <span className={`text-center ${active ? "font-medium" : ""}`}>{label}</span>
           </Link>
         );
       })}
