@@ -71,7 +71,7 @@ export function Margin({ entry, activeNote, onNote }: { entry: Entry; activeNote
             {notes.map(({ number, fact }) => (
               <li
                 key={fact.id}
-                id={`note-${number}`}
+                data-note={number}
                 onMouseEnter={() => onNote(number)}
                 onMouseLeave={() => onNote(undefined)}
                 className={`-mx-2 grid scroll-mt-4 grid-cols-[18px_1fr] gap-2 rounded-md px-2 py-1.5 text-[13px] leading-snug transition-colors ${

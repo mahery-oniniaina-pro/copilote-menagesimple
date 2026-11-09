@@ -154,7 +154,11 @@ function Proof({
             onMouseLeave={() => onNote(undefined)}
             onFocus={() => onNote(segment.note)}
             onBlur={() => onNote(undefined)}
-            onClick={() => document.getElementById(`note-${segment.note}`)?.scrollIntoView({ block: "nearest", behavior: "smooth" })}
+            onClick={() =>
+              [...document.querySelectorAll<HTMLElement>(`[data-note="${segment.note}"]`)]
+                .find((note) => note.offsetParent)
+                ?.scrollIntoView({ block: "nearest", behavior: "smooth" })
+            }
             aria-label={`${segment.text}, source ${segment.note}`}
             className={`pencil-mark cursor-help rounded-[2px] transition-colors ${activeNote === segment.note ? "bg-pencil-soft" : ""}`}
           >
@@ -256,7 +260,7 @@ export function Pli({
         <div className="mb-2 flex items-center gap-3">
           <h3 className="text-[12.5px] font-medium text-ink-500">Message reçu</h3>
           <span className="stamp -rotate-2 rounded-full border border-ink-500 px-2 py-px text-[9.5px] text-ink-600">
-            Reçu le 05.11.26
+            Reçu le {entry.id.startsWith("V") ? new Date().toLocaleDateString("fr-CH", { day: "2-digit", month: "2-digit", year: "2-digit" }) : "05.11.26"}
           </span>
         </div>
         <p className="text-[15.5px] leading-relaxed text-ink-900">{entry.message}</p>
