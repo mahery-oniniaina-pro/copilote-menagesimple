@@ -1,0 +1,573 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-05T20:38:43+00:00",
+  "title": "Design System: Copilote · registre des plis",
+  "extensions": {
+    "colorMeta": {
+      "sheet": {
+        "role": "neutral",
+        "displayName": "Proof White",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": [
+          "#141613",
+          "#383a36",
+          "#50534d",
+          "#5d6159",
+          "#7c8077",
+          "#b0b3ac",
+          "#d3d8cc",
+          "#f1f3ee"
+        ]
+      },
+      "ground": {
+        "role": "neutral",
+        "displayName": "Register Paper",
+        "canonical": "oklch(94.1% 0.013 126.4)",
+        "tonalRamp": [
+          "#141613",
+          "#383a36",
+          "#50534d",
+          "#5d6159",
+          "#7c8077",
+          "#b0b3ac",
+          "#d3d8cc",
+          "#f1f3ee"
+        ]
+      },
+      "ink-50": {
+        "role": "neutral",
+        "displayName": "Ink 50 (hover wash)",
+        "canonical": "#f1f3ee",
+        "tonalRamp": [
+          "#141613",
+          "#383a36",
+          "#50534d",
+          "#5d6159",
+          "#7c8077",
+          "#b0b3ac",
+          "#d3d8cc",
+          "#f1f3ee"
+        ]
+      },
+      "ink-100": {
+        "role": "neutral",
+        "displayName": "Ink 100 (inner rule)",
+        "canonical": "#dfe3d9",
+        "tonalRamp": [
+          "#141613",
+          "#383a36",
+          "#50534d",
+          "#5d6159",
+          "#7c8077",
+          "#b0b3ac",
+          "#d3d8cc",
+          "#f1f3ee"
+        ]
+      },
+      "ink-150": {
+        "role": "neutral",
+        "displayName": "Ink 150 (pane rule)",
+        "canonical": "#d3d8cc",
+        "tonalRamp": [
+          "#141613",
+          "#383a36",
+          "#50534d",
+          "#5d6159",
+          "#7c8077",
+          "#b0b3ac",
+          "#d3d8cc",
+          "#f1f3ee"
+        ]
+      },
+      "ink-200": {
+        "role": "neutral",
+        "displayName": "Ink 200 (control border)",
+        "canonical": "#cdd0c9",
+        "tonalRamp": [
+          "#141613",
+          "#383a36",
+          "#50534d",
+          "#5d6159",
+          "#7c8077",
+          "#b0b3ac",
+          "#d3d8cc",
+          "#f1f3ee"
+        ]
+      },
+      "ink-300": {
+        "role": "neutral",
+        "displayName": "Ink 300 (separator)",
+        "canonical": "#b0b3ac",
+        "tonalRamp": [
+          "#141613",
+          "#383a36",
+          "#50534d",
+          "#5d6159",
+          "#7c8077",
+          "#b0b3ac",
+          "#d3d8cc",
+          "#f1f3ee"
+        ]
+      },
+      "ink-400": {
+        "role": "neutral",
+        "displayName": "Ink 400 (bullet)",
+        "canonical": "#7c8077",
+        "tonalRamp": [
+          "#141613",
+          "#383a36",
+          "#50534d",
+          "#5d6159",
+          "#7c8077",
+          "#b0b3ac",
+          "#d3d8cc",
+          "#f1f3ee"
+        ]
+      },
+      "ink-500": {
+        "role": "neutral",
+        "displayName": "Ink 500 (metadata)",
+        "canonical": "#5d6159",
+        "tonalRamp": [
+          "#141613",
+          "#383a36",
+          "#50534d",
+          "#5d6159",
+          "#7c8077",
+          "#b0b3ac",
+          "#d3d8cc",
+          "#f1f3ee"
+        ]
+      },
+      "ink-600": {
+        "role": "neutral",
+        "displayName": "Ink 600 (muted body)",
+        "canonical": "#50534d",
+        "tonalRamp": [
+          "#141613",
+          "#383a36",
+          "#50534d",
+          "#5d6159",
+          "#7c8077",
+          "#b0b3ac",
+          "#d3d8cc",
+          "#f1f3ee"
+        ]
+      },
+      "ink-700": {
+        "role": "neutral",
+        "displayName": "Ink 700 (secondary body)",
+        "canonical": "#383a36",
+        "tonalRamp": [
+          "#141613",
+          "#383a36",
+          "#50534d",
+          "#5d6159",
+          "#7c8077",
+          "#b0b3ac",
+          "#d3d8cc",
+          "#f1f3ee"
+        ]
+      },
+      "ink-900": {
+        "role": "neutral",
+        "displayName": "Register Ink",
+        "canonical": "oklch(19.7% 0.007 135)",
+        "tonalRamp": [
+          "#141613",
+          "#383a36",
+          "#50534d",
+          "#5d6159",
+          "#7c8077",
+          "#b0b3ac",
+          "#d3d8cc",
+          "#f1f3ee"
+        ]
+      },
+      "signal": {
+        "role": "primary",
+        "displayName": "Signal Yellow",
+        "canonical": "oklch(83.4% 0.158 89)",
+        "tonalRamp": [
+          "#100a00",
+          "#302300",
+          "#533f00",
+          "#785d02",
+          "#a07d06",
+          "#c99f16",
+          "#f3c331",
+          "#ffedc1"
+        ]
+      },
+      "signal-soft": {
+        "role": "primary",
+        "displayName": "Signal Wash",
+        "canonical": "oklch(95.7% 0.05 93.4)",
+        "tonalRamp": [
+          "#100a00",
+          "#302300",
+          "#533f00",
+          "#785d02",
+          "#a07d06",
+          "#c99f16",
+          "#f3c331",
+          "#ffedc1"
+        ]
+      },
+      "pencil": {
+        "role": "secondary",
+        "displayName": "Blue Pencil",
+        "canonical": "oklch(48.8% 0.195 264.8)",
+        "tonalRamp": [
+          "#000134",
+          "#020478",
+          "#0b2ea7",
+          "#2754ce",
+          "#4678f5",
+          "#78a2ff",
+          "#b0c9fd",
+          "#e7effe"
+        ]
+      },
+      "pencil-soft": {
+        "role": "secondary",
+        "displayName": "Pencil Wash",
+        "canonical": "oklch(94.9% 0.02 270.2)",
+        "tonalRamp": [
+          "#000134",
+          "#020478",
+          "#0b2ea7",
+          "#2754ce",
+          "#4678f5",
+          "#78a2ff",
+          "#b0c9fd",
+          "#e7effe"
+        ]
+      },
+      "ok": {
+        "role": "tertiary",
+        "displayName": "Green Ink",
+        "canonical": "oklch(48.8% 0.095 160)",
+        "tonalRamp": [
+          "#000f06",
+          "#002e1b",
+          "#014f32",
+          "#24714e",
+          "#49946f",
+          "#6db891",
+          "#91ddb4",
+          "#c4fede"
+        ]
+      },
+      "ok-soft": {
+        "role": "tertiary",
+        "displayName": "Green Wash",
+        "canonical": "oklch(94.5% 0.019 162.9)",
+        "tonalRamp": [
+          "#000f06",
+          "#002e1b",
+          "#014f32",
+          "#24714e",
+          "#49946f",
+          "#6db891",
+          "#91ddb4",
+          "#c4fede"
+        ]
+      },
+      "errata": {
+        "role": "tertiary",
+        "displayName": "Vermilion",
+        "canonical": "oklch(54.3% 0.18 32)",
+        "tonalRamp": [
+          "#1e0100",
+          "#4a0801",
+          "#7b1403",
+          "#b12309",
+          "#d94c35",
+          "#fe765d",
+          "#fdb4a5",
+          "#ffe9e4"
+        ]
+      },
+      "errata-soft": {
+        "role": "tertiary",
+        "displayName": "Vermilion Wash",
+        "canonical": "oklch(94.5% 0.022 35.1)",
+        "tonalRamp": [
+          "#1e0100",
+          "#4a0801",
+          "#7b1403",
+          "#b12309",
+          "#d94c35",
+          "#fe765d",
+          "#fdb4a5",
+          "#ffe9e4"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page titles on Banc d'essai, Errata, Méthode."
+      },
+      "title": {
+        "displayName": "Pli title",
+        "purpose": "The pli summary above the tracking line (balanced wrap)."
+      },
+      "title-sm": {
+        "displayName": "Register title",
+        "purpose": "Workspace header 'Registre des plis'."
+      },
+      "section": {
+        "displayName": "Section",
+        "purpose": "Proof header, margin section heads, composer label, table captions."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Reading pages, 62-74ch."
+      },
+      "body-sm": {
+        "displayName": "Body small",
+        "purpose": "Registry excerpts, margin text, checks, banner."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Pli actions (Signer, Transmettre)."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Badges, chips, tracking labels, metadata."
+      },
+      "proof": {
+        "displayName": "Proof",
+        "purpose": "The draft reply; Source Serif 4 only here and in quotations."
+      },
+      "quote": {
+        "displayName": "Quotation",
+        "purpose": "Literal site quotations, always inside « »."
+      },
+      "code": {
+        "displayName": "Code",
+        "purpose": "Tracking codes, times, counts, URLs, kbd hints, note numbers; tabular."
+      },
+      "stamp": {
+        "displayName": "Stamp",
+        "purpose": "Uppercase mono postal marks: priority, errata id, decision, date (9.5-12px)."
+      }
+    },
+    "shadows": [
+      {
+        "name": "proof-lift",
+        "value": "0 1px 0 rgb(20 22 19 / 0.04), 0 12px 32px -18px rgb(20 22 19 / 0.25)",
+        "purpose": "The proof sheet only."
+      },
+      {
+        "name": "row-selected",
+        "value": "0 6px 18px -12px rgb(20 22 19 / 0.35)",
+        "purpose": "Selected registry row."
+      },
+      {
+        "name": "toast",
+        "value": "0 8px 24px -8px rgb(20 22 19 / 0.45)",
+        "purpose": "Transient confirmation pill."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Easing for all keyframe motion."
+      },
+      {
+        "name": "sheet-in",
+        "value": "320ms ease-out-expo; opacity 0 -> 1, translateY(6px) -> none",
+        "purpose": "Newly opened pli, composer, toast, bench detail."
+      },
+      {
+        "name": "stamp-in",
+        "value": "380ms ease-out-expo; opacity 0, scale(1.5) rotate(-9deg) blur(3px) -> scale(1) rotate(-5deg)",
+        "purpose": "Decision stamp on the proof."
+      },
+      {
+        "name": "state-transition",
+        "value": "150ms cubic-bezier(0.4, 0, 0.2, 1), colour properties only",
+        "purpose": "Hover, active, selection states."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce -> sheet-in and stamp-in off",
+        "purpose": "Accessibility; the stamp then sits unrotated."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Sign button",
+      "kind": "button",
+      "refersTo": "button-sign",
+      "description": "Primary human action on a ready pli: signs, stamps and copies the draft. Outline style when the pli must be handed off.",
+      "html": "<button class='ds-btn-sign' type='button'><svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='m21 17-2.156-1.868A.5.5 0 0 0 18 15.5v.5a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1c0-2.545-3.991-3.97-8.5-4a1 1 0 0 0 0 5c4.153 0 4.745-11.295 5.708-13.5a2.5 2.5 0 1 1 3.31 3.284'/><path d='M3 21h18'/></svg>Signer et copier<kbd>S</kbd></button>",
+      "css": ".ds-btn-sign { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 0; border-radius: 6px; background: var(--color-ink-900, #141613); color: var(--color-sheet, #ffffff); font: 500 13.5px/1.5 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); cursor: pointer; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-sign:hover { background: var(--color-ink-700, #383a36); } .ds-btn-sign:focus-visible { outline: 2px solid var(--color-pencil, #2652cc); outline-offset: 2px; } .ds-btn-sign kbd { font: 400 10.5px var(--font-code, 'Geist Mono', ui-monospace, Menlo, monospace); opacity: 0.6; }"
+    },
+    {
+      "name": "Hand-off button",
+      "kind": "button",
+      "refersTo": "button-handoff",
+      "description": "Signal-yellow action shown first when the pli must go to the team; the quiet variant is sheet with a signal-soft hover.",
+      "html": "<div class='ds-row'><button class='ds-btn-handoff' type='button'><svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2'/><path d='M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2'/><path d='M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8'/><path d='M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15'/></svg>Transmettre à l'équipe<kbd>T</kbd></button><button class='ds-btn-handoff ds-btn-handoff--quiet' type='button'><svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2'/><path d='M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2'/><path d='M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8'/><path d='M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15'/></svg>Transmettre à l'équipe<kbd>T</kbd></button></div>",
+      "css": ".ds-row { display: flex; gap: 8px; flex-wrap: wrap; } .ds-btn-handoff { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1.5px solid var(--color-ink-900, #141613); border-radius: 6px; background: var(--color-signal, #f2c230); color: var(--color-ink-900, #141613); font: 500 13.5px/1.5 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); cursor: pointer; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1), filter 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-handoff:hover { filter: brightness(0.95); } .ds-btn-handoff:focus-visible { outline: 2px solid var(--color-pencil, #2652cc); outline-offset: 2px; } .ds-btn-handoff--quiet { background: var(--color-sheet, #ffffff); } .ds-btn-handoff--quiet:hover { filter: none; background: var(--color-signal-soft, #fcf1cc); } .ds-btn-handoff kbd { font: 400 10.5px var(--font-code, 'Geist Mono', ui-monospace, Menlo, monospace); opacity: 0.6; }"
+    },
+    {
+      "name": "Status filter chips",
+      "kind": "chip",
+      "refersTo": "chip-filter",
+      "description": "Pill filters in the workspace header with a mono count; active is solid ink.",
+      "html": "<div class='ds-chips' role='toolbar' aria-label='Filtrer par statut'><button class='ds-chip' aria-pressed='true'>Tous<span>15</span></button><button class='ds-chip' aria-pressed='false'>À transmettre<span>9</span></button><button class='ds-chip' aria-pressed='false'>Prêt à signer<span>4</span></button></div>",
+      "css": ".ds-chips { display: flex; gap: 6px; } .ds-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border: 1px solid var(--color-ink-200, #cdd0c9); border-radius: 9999px; background: rgb(255 255 255 / 0.7); color: var(--color-ink-600, #50534d); font: 400 12.5px/1.5 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); cursor: pointer; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), border-color 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-chip span { font: 400 11px var(--font-code, 'Geist Mono', ui-monospace, Menlo, monospace); font-variant-numeric: tabular-nums; color: var(--color-ink-500, #5d6159); } .ds-chip:hover { border-color: #b0b3ac; color: var(--color-ink-900, #141613); } .ds-chip:focus-visible { outline: 2px solid var(--color-pencil, #2652cc); outline-offset: 2px; } .ds-chip[aria-pressed='true'] { background: var(--color-ink-900, #141613); border-color: var(--color-ink-900, #141613); color: var(--color-sheet, #ffffff); } .ds-chip[aria-pressed='true'] span { color: var(--color-ink-200, #cdd0c9); }"
+    },
+    {
+      "name": "Status badges",
+      "kind": "chip",
+      "refersTo": "badge-ready",
+      "description": "The four statuses as long-label badges; colour is always paired with the label.",
+      "html": "<div class='ds-badges'><span class='ds-badge ds-badge--ok'>Prêt à relire et signer</span><span class='ds-badge ds-badge--signal'>À transmettre à l'équipe</span><span class='ds-badge ds-badge--errata'>À revoir avant envoi</span><span class='ds-badge ds-badge--ink'>À classer sans réponse</span><span class='ds-tag'>Urgent</span></div>",
+      "css": ".ds-badges { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; } .ds-badge { padding: 1px 6px; border: 1px solid; border-radius: 4px; font: 500 12px/1.5 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); } .ds-badge--ok { background: var(--color-ok-soft, #e2f1e9); color: var(--color-ok, #22704d); border-color: rgb(34 112 77 / 0.3); } .ds-badge--signal { background: var(--color-signal, #f2c230); color: var(--color-ink-900, #141613); border-color: var(--color-ink-900, #141613); } .ds-badge--errata { background: var(--color-errata-soft, #fbe8e3); color: var(--color-errata, #c2361f); border-color: rgb(194 54 31 / 0.4); } .ds-badge--ink { background: var(--color-ink-50, #f1f3ee); color: var(--color-ink-600, #50534d); border-color: var(--color-ink-200, #cdd0c9); } .ds-tag { padding: 2px 6px; border-radius: 4px; background: var(--color-ink-900, #141613); color: var(--color-sheet, #ffffff); font: 400 10px/1.5 var(--font-code, 'Geist Mono', ui-monospace, Menlo, monospace); letter-spacing: 0.06em; text-transform: uppercase; }"
+    },
+    {
+      "name": "Composer field",
+      "kind": "input",
+      "refersTo": "input-composer",
+      "description": "New-message composer: ink-framed sheet card, paper-toned textarea, pencil focus border.",
+      "html": "<form class='ds-composer'><label for='ds-msg'>Nouveau pli</label><textarea id='ds-msg' rows='3' placeholder=\"Bonjour, la femme de ménage n'est pas venue ce matin…\"></textarea><div class='ds-composer__row'><button type='button' class='ds-btn-sign'>Préparer la réponse</button><kbd>⌘ Entrée</kbd></div></form>",
+      "css": ".ds-composer { max-width: 340px; padding: 12px; border: 1.5px solid var(--color-ink-900, #141613); border-radius: 8px; background: var(--color-sheet, #ffffff); font-family: var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); } .ds-composer label { font: 600 13px/1.5 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); } .ds-composer textarea { display: block; width: 100%; margin-top: 8px; padding: 8px 12px; border: 1px solid var(--color-ink-200, #cdd0c9); border-radius: 6px; background: rgb(233 237 228 / 0.6); color: var(--color-ink-900, #141613); font: 400 14px/1.625 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); resize: vertical; outline: none; caret-color: var(--color-pencil, #2652cc); transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-composer textarea::placeholder { color: var(--color-ink-500, #5d6159); } .ds-composer textarea:focus { border-color: var(--color-pencil, #2652cc); } .ds-composer__row { display: flex; align-items: center; gap: 8px; margin-top: 8px; } .ds-composer kbd { margin-left: auto; font: 400 10.5px var(--font-code, 'Geist Mono', ui-monospace, Menlo, monospace); color: var(--color-ink-500, #5d6159); } .ds-btn-sign { padding: 6px 12px; border: 0; border-radius: 6px; background: var(--color-ink-900, #141613); color: var(--color-sheet, #ffffff); font: 500 13px/1.5 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); cursor: pointer; } .ds-btn-sign:hover { background: var(--color-ink-700, #383a36); } .ds-btn-sign:focus-visible { outline: 2px solid var(--color-pencil, #2652cc); outline-offset: 2px; }"
+    },
+    {
+      "name": "Rail",
+      "kind": "nav",
+      "refersTo": "rail-item-active",
+      "description": "76px left rail at ≥768px (bottom tab bar below): icon over label, ink-50 wash on the active page.",
+      "html": "<nav class='ds-rail' aria-label='Navigation principale'><a class='ds-rail__item' aria-current='page' href='#'><svg width='19' height='19' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M22 12h-6l-2 3h-4l-2-3H2'/><path d='M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z'/></svg><span>Registre</span></a><a class='ds-rail__item' href='#'><svg width='19' height='19' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M13 5h8'/><path d='M13 12h8'/><path d='M13 19h8'/><path d='m3 17 2 2 4-4'/><path d='m3 7 2 2 4-4'/></svg><span>Banc d'essai</span></a></nav>",
+      "css": ".ds-rail { display: flex; flex-direction: column; width: 76px; padding: 12px 0; background: var(--color-sheet, #ffffff); border-right: 1px solid var(--color-ink-150, #d3d8cc); } .ds-rail__item { display: flex; flex-direction: column; align-items: center; gap: 4px; margin: 0 8px 4px; padding: 10px 0; border-radius: 8px; color: var(--color-ink-500, #5d6159); font: 400 11px/1 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); text-align: center; text-decoration: none; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-rail__item:hover { color: var(--color-ink-900, #141613); background: var(--color-ink-50, #f1f3ee); } .ds-rail__item:focus-visible { outline: 2px solid var(--color-pencil, #2652cc); outline-offset: 2px; } .ds-rail__item[aria-current='page'] { color: var(--color-ink-900, #141613); background: var(--color-ink-50, #f1f3ee); font-weight: 500; }"
+    },
+    {
+      "name": "Registry row",
+      "kind": "card",
+      "refersTo": "registry-row-selected",
+      "description": "One pli in the register: mono code and time, summary, two-line excerpt, status mark and label.",
+      "html": "<div class='ds-reg'><button class='ds-reg__row' aria-current='true'><span class='ds-reg__meta'><b>RR·C1</b><i>Urgent</i><span>07:41</span></span><span class='ds-reg__title'>L'intervenante n'est pas arrivée à 9h</span><span class='ds-reg__excerpt'>La femme de ménage n'est toujours pas là, elle devait venir à 9h et il est 10h15.</span><span class='ds-reg__status'><em></em>À transmettre<span>·</span><small>Incident</small></span></button><button class='ds-reg__row'><span class='ds-reg__meta'><b>RR·A1</b><span>10:45</span></span><span class='ds-reg__title'>Prix d'un ménage toutes les deux semaines</span><span class='ds-reg__excerpt'>Bonjour, combien coûte un ménage de 2h30 toutes les deux semaines ?</span><span class='ds-reg__status'><em class='ok'></em>Prêt à signer<span>·</span><small>Prix et budget</small></span></button></div>",
+      "css": ".ds-reg { width: 330px; padding: 8px; background: var(--color-ground, #e9ede4); font-family: var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); } .ds-reg__row { display: block; width: 100%; margin: 2px 0; padding: 10px 12px; text-align: left; border: 1px solid transparent; border-radius: 8px; background: transparent; color: var(--color-ink-900, #141613); cursor: pointer; transition: background-color 150ms, border-color 150ms; } .ds-reg__row:hover { background: rgb(255 255 255 / 0.6); } .ds-reg__row:focus-visible { outline: 2px solid var(--color-pencil, #2652cc); outline-offset: 2px; } .ds-reg__row[aria-current='true'] { background: var(--color-sheet, #ffffff); border-color: var(--color-ink-900, #141613); box-shadow: 0 6px 18px -12px rgb(20 22 19 / 0.35); } .ds-reg__meta { display: flex; align-items: center; gap: 8px; font: 400 11px/1.5 var(--font-code, 'Geist Mono', ui-monospace, Menlo, monospace); color: var(--color-ink-500, #5d6159); font-variant-numeric: tabular-nums; } .ds-reg__meta b { font-weight: 400; color: var(--color-ink-700, #383a36); } .ds-reg__meta span { margin-left: auto; } .ds-reg__meta i { font-style: normal; font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 1px 4px; border-radius: 4px; background: var(--color-ink-900, #141613); color: var(--color-sheet, #ffffff); } .ds-reg__title { display: block; margin-top: 4px; font: 500 14px/1.5 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .ds-reg__row[aria-current='true'] .ds-reg__title { font-weight: 600; } .ds-reg__excerpt { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: 2px; font: 400 13px/1.375 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); color: var(--color-ink-500, #5d6159); } .ds-reg__status { display: flex; align-items: center; gap: 6px; margin-top: 8px; font: 500 12px/1.5 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); color: var(--color-ink-700, #383a36); } .ds-reg__status em { width: 8px; height: 8px; border-radius: 2px; background: var(--color-signal, #f2c230); box-shadow: 0 0 0 1px var(--color-ink-900, #141613); } .ds-reg__status em.ok { background: var(--color-ok, #22704d); box-shadow: none; } .ds-reg__status span { color: #b0b3ac; } .ds-reg__status small { font: 400 12px/1.5 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); color: var(--color-ink-500, #5d6159); }"
+    },
+    {
+      "name": "Tracking label and line",
+      "kind": "custom",
+      "refersTo": "tracking-label",
+      "description": "Registered-mail label with barcode, then the five-step tracking line; a signal dot marks the step waiting on a person.",
+      "html": "<div class='ds-track'><div class='ds-label'><span class='ds-label__rr'>RR</span><span class='ds-label__code'><svg width='78' height='16' viewBox='0 0 78 16' fill='currentColor' aria-hidden='true'><rect x='0' y='0' width='1' height='16'/><rect x='4' y='0' width='3' height='16'/><rect x='10' y='0' width='3' height='16'/><rect x='16' y='0' width='3' height='16'/><rect x='22' y='0' width='1' height='16'/><rect x='26' y='0' width='1' height='16'/><rect x='31' y='0' width='1' height='16'/><rect x='36' y='0' width='1' height='16'/><rect x='40' y='0' width='1' height='16'/><rect x='44' y='0' width='2' height='16'/><rect x='50' y='0' width='2' height='16'/><rect x='56' y='0' width='2' height='16'/><rect x='60' y='0' width='3' height='16'/><rect x='67' y='0' width='3' height='16'/><rect x='72' y='0' width='2' height='16'/></svg><span>A1</span></span></div><ol class='ds-steps'><li><i></i><b>Reçu</b><small>10:45</small></li><li><i></i><b>Lu sans IA</b><small>français</small></li><li style='flex-grow:5'><i></i><b>Rédigé</b><small>Mistral 7B, 16,2 s</small></li><li><i></i><b>Contrôlé</b><small>7 contrôles sur 7</small></li><li class='last'><i class='human'></i><b>Signature</b><small>en attente de vous</small></li></ol></div>",
+      "css": ".ds-track { max-width: 620px; font-family: var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); color: var(--color-ink-900, #141613); } .ds-label { display: inline-flex; align-items: stretch; overflow: hidden; border: 1.5px solid var(--color-ink-900, #141613); border-radius: 3px; background: var(--color-sheet, #ffffff); } .ds-label__rr { display: flex; align-items: center; padding: 0 8px; background: var(--color-ink-900, #141613); color: var(--color-sheet, #ffffff); font: 400 11px var(--font-code, 'Geist Mono', ui-monospace, Menlo, monospace); letter-spacing: 0.08em; } .ds-label__code { display: flex; flex-direction: column; justify-content: center; padding: 4px 10px; } .ds-label__code svg { display: block; } .ds-label__code span { margin-top: 2px; font: 400 10.5px/1 var(--font-code, 'Geist Mono', ui-monospace, Menlo, monospace); letter-spacing: 0.06em; font-variant-numeric: tabular-nums; } .ds-steps { display: flex; margin: 16px 0 0; padding: 14px 16px 16px; list-style: none; border: 1px solid var(--color-ink-200, #cdd0c9); border-radius: 8px; } .ds-steps li { display: flex; flex-direction: column; flex: 1 1 0; min-width: 92px; position: relative; padding-top: 16px; } .ds-steps li::before { content: ''; position: absolute; top: 4px; left: 0; right: 0; height: 1.5px; background: var(--color-ink-900, #141613); } .ds-steps li.last { flex: 0 0 auto; align-items: flex-end; text-align: right; min-width: 0; } .ds-steps i { position: absolute; top: 0; left: 0; width: 10px; height: 10px; box-sizing: border-box; border: 1.5px solid var(--color-ink-900, #141613); border-radius: 9999px; background: var(--color-ink-900, #141613); } .ds-steps li.last i { left: auto; right: 0; } .ds-steps i.human { background: var(--color-signal, #f2c230); } .ds-steps b { margin-top: 6px; padding-right: 8px; font: 500 12.5px/1.5 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); white-space: nowrap; } .ds-steps small { padding-right: 8px; font: 400 11.5px/1.375 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); color: var(--color-ink-500, #5d6159); } .ds-steps li.last b, .ds-steps li.last small { padding-right: 0; }"
+    },
+    {
+      "name": "Proof with pencil marks and stamp",
+      "kind": "custom",
+      "refersTo": "proof-sheet",
+      "description": "The perforated white proof: serif draft, sourced figures underlined in blue pencil with a numbered note, decision stamp, action bar.",
+      "html": "<div class='ds-ground'><section class='ds-proof'><header class='ds-proof__head'><h3>Épreuve de la réponse</h3><span>Mistral 7B, réponse enregistrée · à relire</span><button type='button' class='ds-pencil-btn'><svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M13 21h8'/><path d='m15 5 4 4'/><path d='M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z'/></svg>Modifier</button></header><div class='ds-proof__body'><p>Bonjour,</p><p>Un ménage de <button type='button' class='ds-mark is-active'>2h30<sup>1</sup></button> toutes les deux semaines coûte en moyenne <button type='button' class='ds-mark'>CHF 238<sup>2</sup></button> par mois.</p><p>Bien cordialement,<br>L'équipe</p><div class='ds-stamp' aria-hidden='true'><b>Signé</b><span>bon à envoyer</span></div></div><footer class='ds-proof__bar'><button type='button' class='ds-btn-sign'><svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='m21 17-2.156-1.868A.5.5 0 0 0 18 15.5v.5a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1c0-2.545-3.991-3.97-8.5-4a1 1 0 0 0 0 5c4.153 0 4.745-11.295 5.708-13.5a2.5 2.5 0 1 1 3.31 3.284'/><path d='M3 21h18'/></svg>Signer et copier</button></footer></section></div>",
+      "css": ".ds-ground { padding: 16px; background: var(--color-ground, #e9ede4); } .ds-proof { position: relative; max-width: 620px; background: var(--color-sheet, #ffffff); border: 1px solid var(--color-ink-150, #d3d8cc); border-radius: 0 0 8px 8px; box-shadow: 0 1px 0 rgb(20 22 19 / 0.04), 0 12px 32px -18px rgb(20 22 19 / 0.25); font-family: var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); color: var(--color-ink-900, #141613); } .ds-proof::before { content: ''; position: absolute; inset: -5px 0 auto 0; height: 10px; background: radial-gradient(circle at 5px 5px, var(--color-ground, #e9ede4) 3.2px, transparent 3.6px) 0 0 / 14px 10px repeat-x; } .ds-proof__head { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 20px 20px 12px; border-bottom: 1px solid var(--color-ink-100, #dfe3d9); } .ds-proof__head h3 { margin: 0; font: 600 13px/1.5 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); } .ds-proof__head span { font: 400 12px/1.5 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); color: var(--color-ink-500, #5d6159); } .ds-pencil-btn { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; padding: 4px 8px; border: 0; border-radius: 4px; background: transparent; color: var(--color-pencil, #2652cc); font: 400 12.5px/1.5 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); cursor: pointer; } .ds-pencil-btn:hover { background: var(--color-pencil-soft, #e9eefc); } .ds-pencil-btn:focus-visible { outline: 2px solid var(--color-pencil, #2652cc); outline-offset: 2px; } .ds-proof__body { position: relative; padding: 24px 28px; font: 400 16.5px/1.8 var(--font-proof, 'Source Serif 4', ui-serif, Georgia, serif); } .ds-proof__body p { margin: 0 0 1em; } .ds-mark { padding: 0 0 1px; border: 0; border-radius: 2px; font: inherit; color: inherit; cursor: help; background: linear-gradient(var(--color-pencil, #2652cc), var(--color-pencil, #2652cc)) 0 100% / 100% 2px no-repeat; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-mark:hover, .ds-mark.is-active { background-color: var(--color-pencil-soft, #e9eefc); } .ds-mark:focus-visible { outline: 2px solid var(--color-pencil, #2652cc); outline-offset: 2px; } .ds-mark sup { margin-left: 2px; font: 500 10px var(--font-code, 'Geist Mono', ui-monospace, Menlo, monospace); color: var(--color-pencil, #2652cc); } .ds-stamp { position: absolute; top: 16px; right: 20px; padding: 6px 12px; border: 2px solid var(--color-ok, #22704d); border-radius: 6px; background: rgb(255 255 255 / 0.8); color: var(--color-ok, #22704d); text-align: center; font-family: var(--font-code, 'Geist Mono', ui-monospace, Menlo, monospace); letter-spacing: 0.06em; text-transform: uppercase; transform: rotate(-5deg); animation: ds-stamp-in 380ms cubic-bezier(0.16, 1, 0.3, 1) both; } .ds-stamp b { display: block; font-size: 12px; font-weight: 600; } .ds-stamp span { display: block; font-size: 9.5px; } @keyframes ds-stamp-in { from { opacity: 0; transform: scale(1.5) rotate(-9deg); filter: blur(3px); } to { opacity: 1; transform: scale(1) rotate(-5deg); filter: blur(0); } } @media (prefers-reduced-motion: reduce) { .ds-stamp { animation: none; } } .ds-proof__bar { display: flex; gap: 8px; padding: 14px 20px; border-top: 1px solid var(--color-ink-100, #dfe3d9); border-radius: 0 0 8px 8px; background: var(--color-sheet, #ffffff); } .ds-btn-sign { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 0; border-radius: 6px; background: var(--color-ink-900, #141613); color: var(--color-sheet, #ffffff); font: 500 13.5px/1.5 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); cursor: pointer; } .ds-btn-sign:hover { background: var(--color-ink-700, #383a36); } .ds-btn-sign:focus-visible { outline: 2px solid var(--color-pencil, #2652cc); outline-offset: 2px; }"
+    },
+    {
+      "name": "Margin checks, source note and errata",
+      "kind": "custom",
+      "refersTo": "errata-note",
+      "description": "Verification margin: check circles, a numbered pencil source with its quote and URL, and an errata slip.",
+      "html": "<aside class='ds-margin'><section><h3>Contrôles faits sans IA</h3><ul><li><span class='ds-check'><svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M20 6 9 17l-5-5'/></svg></span>Chiffres vérifiés</li><li><span class='ds-check ds-check--fail'><svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M18 6 6 18'/><path d='m6 6 12 12'/></svg></span>Aucune promesse<small>« garanti » trouvé dans l'épreuve</small></li></ul></section><section><h3>Sources en marge</h3><ol><li class='ds-note is-active'><span class='ds-note__n'>1</span><div><p>Le ménage régulier coûte CHF 43.90 de l'heure, TVA comprise.</p><blockquote>« CHF 43.90 / heure, TVA incluse »</blockquote><a href='#'>menagesimple.com/tarifs</a></div></li></ol></section><section><h3>Errata glissés dans le pli</h3><div class='ds-errata'><p><span>Errata C4</span>Date du débit de la carte</p><p class='ds-errata__body'>Une seule règle, la même sur toutes les pages.</p><a href='#'>Voir les citations du site</a></div></section></aside>",
+      "css": ".ds-margin { width: 320px; background: var(--color-ground, #e9ede4); color: var(--color-ink-900, #141613); font: 400 13px/1.375 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); } .ds-margin section { padding: 20px; border-bottom: 1px solid var(--color-ink-100, #dfe3d9); } .ds-margin section:last-child { border-bottom: 0; } .ds-margin h3 { margin: 0 0 12px; font: 600 13px/1.5 var(--font-ui, 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif); } .ds-margin ul, .ds-margin ol { margin: 0; padding: 0; list-style: none; } .ds-margin ul li { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; font-size: 13.5px; } .ds-margin ul small { flex-basis: 100%; padding-left: 28px; font-size: 12.5px; color: var(--color-ink-500, #5d6159); } .ds-check { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; flex-shrink: 0; border-radius: 9999px; background: var(--color-ok-soft, #e2f1e9); color: var(--color-ok, #22704d); } .ds-check--fail { background: var(--color-errata-soft, #fbe8e3); color: var(--color-errata, #c2361f); } .ds-note { display: grid; grid-template-columns: 18px 1fr; gap: 8px; margin: 0 -8px; padding: 6px 8px; border-radius: 6px; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-note.is-active, .ds-note:hover { background: var(--color-pencil-soft, #e9eefc); } .ds-note__n { font: 500 11px/1.6 var(--font-code, 'Geist Mono', ui-monospace, Menlo, monospace); color: var(--color-pencil, #2652cc); } .ds-note p { margin: 0; } .ds-note blockquote { margin: 6px 0 0; font: italic 400 13.5px/1.5 var(--font-proof, 'Source Serif 4', ui-serif, Georgia, serif); color: var(--color-ink-600, #50534d); } .ds-note a { display: inline-block; margin-top: 4px; font: 400 10.5px var(--font-code, 'Geist Mono', ui-monospace, Menlo, monospace); color: var(--color-pencil, #2652cc); text-decoration: none; } .ds-note a:hover { text-decoration: underline; } .ds-errata { padding: 12px 14px; border-radius: 6px; background: var(--color-errata-soft, #fbe8e3); } .ds-errata p { margin: 0; font-weight: 500; color: var(--color-errata, #c2361f); } .ds-errata p span { margin-right: 6px; font: 400 10.5px var(--font-code, 'Geist Mono', ui-monospace, Menlo, monospace); letter-spacing: 0.06em; text-transform: uppercase; } .ds-errata .ds-errata__body { margin-top: 6px; font-weight: 400; color: var(--color-ink-700, #383a36); } .ds-errata a { display: inline-block; margin-top: 6px; font-size: 12.5px; color: var(--color-errata, #c2361f); text-underline-offset: 3px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Registered Proof",
+    "overview": "Every customer message is a *pli recommandé*: it carries a tracking label with a barcode, moves along a five-step tracking line, and only leaves with a human signature. The reply inside it is a printer's proof: a perforated white sheet set in a serif, where every sourced figure is underlined in blue pencil and keyed to a numbered note in the margin. The register (list, chrome, controls) is a cool grey-green paper; the proof is the only true white surface and the only lifted one.\n\nThe system is dense and quiet, built for an agent who triages all day and a newcomer who must understand it in seconds. Hierarchy comes from typeface changes (grotesk for the register, serif for the proof, mono for anything stamped) and from fine rules, not from colour or size jumps. Colour is reserved for state, four hues with one job each. Postal objects (label, tracking rule, stamps, outline buttons) are drawn with a heavier 1.5px ink stroke so they read as printed forms, not as cards.\n\nThe direction rejects the generic grey three-column support inbox (neutral greys, one indigo accent, soft cards). The three panes exist; what keeps them out of that genre is the paper ground, the proof sheet, the postal strokes and the state-only colour.",
+    "keyCharacteristics": [
+      "Grey-green paper ground (`ground`), white only for the proof and for cards that hold content.",
+      "One green-tinted ink ramp for all neutrals; four state hues (signal, pencil, ok, errata), each with a `-soft` wash.",
+      "Three faces with fixed roles: Schibsted Grotesk (UI), Source Serif 4 (proof and quotations), Geist Mono (codes, times, counts, URLs, stamps).",
+      "Explicit pixel type sizes in half-pixel steps, 9.5px to 26px; no fluid type.",
+      "1px hairlines for structure, 1.5px ink strokes for postal objects, 2px for pencil underlines and stamps.",
+      "Single-key keyboard operation of the register (J/K, S, T, N)."
+    ],
+    "rules": [
+      {
+        "name": "The State-Only Rule",
+        "body": "Colour carries state, never decoration. Anything that is not signal, pencil, ok or errata is drawn from the ink ramp.",
+        "section": "colors"
+      },
+      {
+        "name": "The Yellow Hand Rule",
+        "body": "Signal yellow means \"waiting for a person\". If nobody has to act, it is not yellow.",
+        "section": "colors"
+      },
+      {
+        "name": "The Never-Alone Rule",
+        "body": "A status colour always travels with a text label or an icon: registry mark plus label, check or cross in the circle, struck-through id on the bench, \"en attente de vous\" beside the yellow dot.",
+        "section": "colors"
+      },
+      {
+        "name": "The Three Hands Rule",
+        "body": "Grotesk is the register, serif is the proof, mono is the rubber stamp. Never set UI chrome in the serif or running text in the mono.",
+        "section": "typography"
+      },
+      {
+        "name": "The Stamp Case Rule",
+        "body": "Uppercase appears only through the mono stamp style, and only on postal marks that carry data (priority, errata id, decision, date).",
+        "section": "typography"
+      },
+      {
+        "name": "The Pane Rule",
+        "body": "At ≥768px the page never scrolls; panes do. A selected registry row is scrolled into view inside its own pane with 8px of slack.",
+        "section": "layout"
+      },
+      {
+        "name": "The One Sheet Rule",
+        "body": "The proof is the only resting surface with a shadow. Cards, panels, tables and the margin are flat, bordered with `ink-150`.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** keep colour to state: signal for \"a person must act\", pencil for sources and proof corrections, ok for ready and signed, errata for failures and contradictions; everything else from the ink ramp.",
+      "**Do** underline every sourced figure in the proof with the 2px pencil rule and a mono superscript number that matches a numbered margin note with its quote and source URL.",
+      "**Do** draw postal objects (tracking label, tracking rule and dots, outline buttons, composer frame, stamps) with a 1.5px ink-900 stroke, and keep structural rules at 1px `ink-150` or `ink-100`.",
+      "**Do** pair every status colour with a text label or icon, and keep the full status in text when a stamp is `aria-hidden`.",
+      "**Do** set codes, times, counts and URLs in Geist Mono with tabular numerals, and reserve Source Serif 4 for the draft and literal site quotations.",
+      "**Do** put the expected action first: hand-off (signal) before sign for \"À transmettre\", sign (ink) before hand-off otherwise.",
+      "**Do** give every postal element real data: code, time, language, provider and seconds, check count, decision.",
+      "**Do** gate keyframe motion behind `prefers-reduced-motion` and keep state changes to 150ms colour transitions.",
+      "**Do** expose single-key shortcuts for the register and show them as mono kbd hints at ≥1024px."
+    ],
+    "donts": [
+      "**Don't** use signal yellow for branding, emphasis or decoration; the rail monogram's yellow fill is a known divergence, not a pattern.",
+      "**Don't** add a second accent hue, gradients or tinted panels beyond the four `-soft` washes.",
+      "**Don't** set text lighter than `ink-500` (#5d6159); `ink-300` and `ink-400` are for separators, bullets and outline tags only.",
+      "**Don't** let text leave the proof without a signature: no new copy or export path that bypasses the stamp.",
+      "**Don't** set UI chrome in the serif or running text in the mono, and don't use uppercase outside the mono stamp style.",
+      "**Don't** lift anything but the proof, the selected row and the toast; no other shadows.",
+      "**Don't** round beyond 8px except for pills (chips, toast, dots, check circles, date stamp).",
+      "**Don't** let the workspace slide toward the generic support inbox: white panels, neutral greys, one indigo accent, soft cards everywhere."
+    ]
+  }
+}
